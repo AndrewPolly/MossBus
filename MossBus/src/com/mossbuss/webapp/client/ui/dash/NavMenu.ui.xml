@@ -1,0 +1,18 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:style>
+	
+	</ui:style>
+	<g:HTMLPanel>
+		<g:VerticalPanel height="237px" width="77px" horizontalAlignment="ALIGN_CENTER">
+			<g:Label text="Navigation" styleName="headingText"/>
+			<g:Label text="Sales" ui:field="salesMenu"/>
+			<g:Label text="Customers" ui:field="customersMenu"/>
+			<g:Label text="Stock Check" ui:field="stockCheckMenu"/>
+			<g:Label text="Workshop" ui:field="workshopMenu"/>
+			<g:Label text="Stores" ui:field="storesMenu"/>
+			<g:Label text="Admin" ui:field="adminMenu"/>
+		</g:VerticalPanel>
+	</g:HTMLPanel>
+</ui:UiBinder> 

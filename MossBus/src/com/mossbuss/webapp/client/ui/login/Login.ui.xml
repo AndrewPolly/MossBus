@@ -1,0 +1,30 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:style>
+	
+	</ui:style>
+	<g:HTMLPanel>
+		<g:VerticalPanel width="364px" height="234px" horizontalAlignment="ALIGN_CENTER" verticalAlignment="ALIGN_MIDDLE">
+			<g:AbsolutePanel height="228px" width="388px">
+				<g:at left="10" top="10">
+					<g:Label text="Login" width="310px" height="18px" horizontalAlignment="ALIGN_CENTER" styleName="headingText"/>
+				</g:at>
+				<g:at left="275" top="181">
+					<g:Button text="Enter" styleName="generalButton" ui:field="loginButton"/>
+				</g:at>
+				<g:at left="10" top="55">
+					<g:VerticalPanel width="370px" height="121px" verticalAlignment="ALIGN_MIDDLE" horizontalAlignment="ALIGN_CENTER">
+						<g:Label text="Email Address"/>
+						<g:TextBox width="184px" styleName="entrText" ui:field="userNameText"/>
+						<g:Label text="Password"/>
+						<g:PasswordTextBox width="184px" styleName="entrText" ui:field="userPasswordText"/>
+					</g:VerticalPanel>
+				</g:at>
+				<g:at left="10" top="181">
+					<g:Label width="259px" height="18px" horizontalAlignment="ALIGN_CENTER" styleName="serverResponseLabelError" ui:field="errorLabel"/>
+				</g:at>
+			</g:AbsolutePanel>
+		</g:VerticalPanel>
+	</g:HTMLPanel>
+</ui:UiBinder> 

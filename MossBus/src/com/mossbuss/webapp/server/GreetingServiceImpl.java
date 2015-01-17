@@ -1,6 +1,12 @@
 package com.mossbuss.webapp.server;
 
+import java.util.ArrayList;
+
 import com.mossbuss.webapp.client.GreetingService;
+import com.mossbuss.webapp.client.dto.BusDTO;
+import com.mossbuss.webapp.client.dto.ClientDTO;
+import com.mossbuss.webapp.client.dto.DriverDTO;
+import com.mossbuss.webapp.client.dto.TripSheetDTO;
 import com.mossbuss.webapp.shared.FieldVerifier;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
@@ -44,5 +50,73 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements
 		}
 		return html.replaceAll("&", "&amp;").replaceAll("<", "&lt;")
 				.replaceAll(">", "&gt;");
+	}
+
+	@Override
+	public void resetDatabase(String string) throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public DriverDTO doLogin(DriverDTO driverDTO) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ClientDTO saveStudent(ClientDTO studentDetails) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<String> updateContactNameOracle(String sql)
+			throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ClientDTO getStudent(int selectedID) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void saveDriver(DriverDTO userdetails) throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public ArrayList<DriverDTO> listDrivers(String string) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void saveBus(BusDTO item) throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public BusDTO getBus(int selectedID) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<String> updateBusCodeOracle(String sql) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public TripSheetDTO saveTripSheet(TripSheetDTO orderDetails)
+			throws Exception {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
