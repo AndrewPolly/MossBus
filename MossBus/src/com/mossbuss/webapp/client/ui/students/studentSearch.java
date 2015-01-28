@@ -117,7 +117,7 @@ public class studentSearch extends Composite {
 				   //System.out.println(word);
 				   wordList.add(word);
 				}
-				String sql = "select id, contact, company from customer where contact Like '%" + wordList.get(0)+"%' or company Like '%" + wordList.get(0)+"%'";
+				String sql = "select id, contact, ParentName from client where client Like '%" + wordList.get(0)+"%' or company Like '%" + wordList.get(0)+"%'";
 				sql = sql + "Limit 0,50";
 				System.out.println(sql);
 				if(event.isAltKeyDown() || event.isControlKeyDown() || event.isDownArrow() || event.isLeftArrow() || event.isRightArrow() | event.isUpArrow()){

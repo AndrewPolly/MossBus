@@ -1,6 +1,8 @@
 package com.mossbuss.webapp.client.ui.students;
 
 
+import java.util.ArrayList;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -19,6 +21,7 @@ public class studentEdit extends Composite {
 	private static studentEditUiBinder uiBinder = GWT.create(studentEditUiBinder.class);
 	
 	private ClientDTO clientDetails = new ClientDTO();
+	private ArrayList<String> Students = new ArrayList<String>();
 	
 	@UiField TabPanel tPanel;
 	@UiField TextBox addressField;
@@ -28,6 +31,8 @@ public class studentEdit extends Composite {
 
 
 	@UiField TextBox cellNumber;
+	@UiField TextBox studentNames;
+	@UiField Button addStudentButton;
 	@UiField Button saveButton;
 	@UiField Button nextButton;
 	@UiField Button cancelButton;
@@ -86,7 +91,17 @@ public class studentEdit extends Composite {
 	void onNextButton2Click(ClickEvent event) {
 		tPanel.selectTab(2);
 	}
-	
+	@UiHandler("addStudentButton")
+	void onAddStudentButtonClick(ClickEvent event) {
+		if (clientDetails.getStudentNames() == null) {
+			Students.add(studentNames.getText());
+			clientDetails.setStudentNames(Students);
+		} else {			
+			clientDetails.addStudentName(studentNames.getText());
+		}
+		studentNames.setText("");
+		studentNames.setFocus(true);
+	}
 	@UiHandler("backButton3")
 	void onBackButton3Click(ClickEvent event) {
 		tPanel.selectTab(1);

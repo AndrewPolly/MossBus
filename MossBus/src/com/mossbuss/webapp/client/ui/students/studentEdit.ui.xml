@@ -58,8 +58,17 @@
 			
 			<g:Tab text="Add Students">
 			<g:AbsolutePanel width="445px" height="257px">
+				<g:at left="10" top="55">
+					<g:Label text="Student Name:"/>
+				</g:at>
+				<g:at left="72" top="55">
+					<g:TextBox width="348" height="6px" ui:field="studentNames" />
+				</g:at>
 				<g:at left="345" top="216">
 					<g:Button styleName="generalButton" text="Next" width="100px" height="41px" ui:field="nextButton2"/>
+				</g:at>
+				<g:at left="245" top="216">
+					<g:Button styleName="generalButton" text="Add Student" width="100px" height="41px" ui:field="addStudentButton"/>
 				</g:at>
 <!-- 				<g:at left="10" top="10"> -->
 <!-- 					<p1:addressPanel ui:field="invoiceAddress"/> -->
