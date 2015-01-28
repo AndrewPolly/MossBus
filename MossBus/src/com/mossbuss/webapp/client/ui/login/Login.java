@@ -28,7 +28,7 @@ public class Login extends Composite {
 
 	private static LoginUiBinder uiBinder = GWT.create(LoginUiBinder.class);
 	private final GreetingServiceAsync greetingService = GWT.create(GreetingService.class);
-	DriverDTO userDTO;
+	DriverDTO driverDTO;
 	@UiField Button loginButton;
 	@UiField Label errorLabel;
 	@UiField TextBox userNameText;
@@ -57,23 +57,24 @@ public class Login extends Composite {
 	private void doLogin() {
 		//RootPanel.get("errorLabelContainer").clear();
 		//errorLabel.setText("");
-		userDTO = new DriverDTO();
+		driverDTO = new DriverDTO();
 		///*
 		String userName = userNameText.getText();
 		String password = userPasswordText.getText();
-		userDTO.setEmailAddress(userName);
-		userDTO.setPassword(password);
+		driverDTO.setEmailAddress(userName);
+		driverDTO.setPassword(password);
 		
-		greetingService.doLogin(userDTO, new AsyncCallback<DriverDTO>() {
+		greetingService.doLogin(driverDTO, new AsyncCallback<DriverDTO>() {
 			public void onFailure(Throwable caught) {
 				errorLabel.setText(caught.getMessage());
 			}
 
 			public void onSuccess(DriverDTO result) {
 				//save cookie
-				Date now= new Date();
+				Date now = new Date();
 				now.setTime(now.getTime() + 365 * 24 * 60 * 60 * 1000);
-				Cookies.setCookie("QTS_UserName", result.getEmailAddress(), now);
+				Cookies.setCookie("MossBuss_UserName", result.getEmailAddress(), now);
+				
 				//goto dash
 				Dash dashPanel = new Dash();
 				dashPanel.setOnlineUser(result);
@@ -84,15 +85,15 @@ public class Login extends Composite {
 			}
 		});
 	}
+	
 	public void setFocus() {
 		userNameText.setText("Email Address");
 		userNameText.setFocus(true);
 		userNameText.selectAll();
-		if(Cookies.getCookie("QTS_UserName")!= null){
-			userNameText.setText(Cookies.getCookie("QTS_UserName"));
-			userPasswordText.setText("");
+		if(Cookies.getCookie("MossBuss_UserName")!= null){
+			userNameText.setText(Cookies.getCookie("MossBuss_UserName"));
 			userPasswordText.setFocus(true);
-			userPasswordText.selectAll();
+
 		}
 	}
 }

@@ -1,5 +1,7 @@
 package com.mossbuss.webapp.server.data;
 
+import java.util.ArrayList;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,9 +22,10 @@ public class Client {
 	private int driverID;			// the driver the student is assigned to
 	private float accBal;			// The account balance of the client
 	private String emailAddress; 
-	private String studentName;
+	private ArrayList<String> studentNames;
 	private String parentName;
 	private String cellNumber;
+	private String Address;
 	
 	public Client() {
 		
@@ -69,11 +72,14 @@ public class Client {
 	}
 	
 	@Column(name="StudentName")
-	public String getStudentName() {
-		return studentName;
+	public ArrayList<String> getStudentNames() {
+		return studentNames;
 	}
-	public void setStudentName(String StudentName) {
-		studentName = StudentName;
+	public void setStudentNames(ArrayList<String> StudentNames) {
+		this.studentNames = StudentNames;
+	}
+	public void addStudentName(String StudentName) {
+		this.studentNames.add(StudentName);
 	}
 	
 	@Column(name="ParentName")
@@ -91,7 +97,13 @@ public class Client {
 	public void setCellNumber(String CellNumber) {
 		cellNumber = CellNumber;
 	}
-	
+	@Column(name="Address")
+	public String getAddress() {
+		return Address;
+	}
+	public void setAddress(String address) {
+		this.Address = address;
+	}
 	@Id
 	@GeneratedValue
 	@Column(name="id")
@@ -110,7 +122,7 @@ public class Client {
 		client.setDriverID(this.getDriverID());
 		client.setAccBal(this.getAccBal());
 		client.setEmailAddress(this.getEmailAddress());
-		client.setStudentName(this.getStudentName());
+		client.setStudentNames(this.getStudentNames());
 		client.setParentName(this.getParentName());
 		client.setCellNumber(this.getCellNumber());
 		return client;
@@ -124,7 +136,7 @@ public class Client {
 		this.setDriverID(client.getDriverID());
 		this.setAccBal(client.getAccBal());
 		this.setEmailAddress(client.getEmailAddress());
-		this.setStudentName(client.getStudentName());
+		this.setStudentNames(client.getStudentNames());
 		this.setParentName(client.getParentName());
 		this.setCellNumber(client.getCellNumber());
 	}

@@ -1,6 +1,7 @@
 package com.mossbuss.webapp.client.dto;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 /**	
  * 	Data Transfer Object for clients.
  * 		Clients are the parents of the children, this holds all there 
@@ -17,9 +18,10 @@ public class ClientDTO implements Serializable {
 	private int driverID;			// the driver the student is assigned to
 	private float accBal;			// The account balance of the client
 	private String emailAddress; 
-	private String studentName;
+	private ArrayList<String> studentNames;
 	private String parentName;
 	private String cellNumber;
+	private String Address;
 	
 	
 	public int getID() {
@@ -34,11 +36,14 @@ public class ClientDTO implements Serializable {
 	public void setEmailAddress(String EmailAddress) {
 		this.emailAddress = EmailAddress;
 	}
-	public String getStudentName() {
-		return studentName;
+	public ArrayList<String> getStudentNames() {
+		return studentNames;
 	}
-	public void setStudentName(String StudentName) {
-		this.studentName = StudentName;
+	public void addStudentName(String StudentName) {
+		this.studentNames.add(StudentName);
+	}
+	public void setStudentNames(ArrayList<String> StudentNames) {
+		this.studentNames = StudentNames;
 	}
 	public String getParentName() {
 		return parentName;
@@ -75,5 +80,11 @@ public class ClientDTO implements Serializable {
 	}
 	public int getPayOption() {
 		return payOption;
+	}
+	public void setAddress(String address) {
+		this.Address = address;
+	}
+	public String getAddress() {
+		return Address;
 	}
 }

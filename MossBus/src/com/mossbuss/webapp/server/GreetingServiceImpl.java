@@ -1,6 +1,12 @@
 package com.mossbuss.webapp.server;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.AnnotationConfiguration;
 
 import com.mossbuss.webapp.client.GreetingService;
 import com.mossbuss.webapp.client.dto.BusDTO;
@@ -8,12 +14,18 @@ import com.mossbuss.webapp.client.dto.ClientDTO;
 import com.mossbuss.webapp.client.dto.DriverDTO;
 import com.mossbuss.webapp.client.dto.TripSheetDTO;
 import com.mossbuss.webapp.shared.FieldVerifier;
+import com.mossbuss.webapp.server.data.Driver;
+import com.mossbuss.webapp.server.data.Client;
+import com.mossbuss.webapp.server.data.Bus;
+import com.mossbuss.webapp.server.data.MaintenanceRecord;
+import com.mossbuss.webapp.server.data.TripSheet;
+
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 /**
  * The server-side implementation of the RPC service.
  */
-@SuppressWarnings("serial")
+@SuppressWarnings({ "serial", "deprecation" })
 public class GreetingServiceImpl extends RemoteServiceServlet implements
 		GreetingService {
 
@@ -60,14 +72,82 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements
 
 	@Override
 	public DriverDTO doLogin(DriverDTO driverDTO) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		// Login
+		Session session = null;
+		Driver driver = new Driver();
+		try{
+			AnnotationConfiguration config = new AnnotationConfiguration();
+			config.addAnnotatedClass(Driver.class);
+			config.configure();
+			SessionFactory factory = config.buildSessionFactory();
+			session = factory.getCurrentSession();
+			session.beginTransaction();
+			String hql = "from Driver where EmailAddress = '"+ driverDTO.getEmailAddress() +"' AND Password = '"+driverDTO.getPassword()+"'";
+			
+			Query query = session.createQuery(hql);
+			List userList = query.list();
+			if(userList == null || userList.size()<1){
+				throw new Exception("Authentication Error");
+			} else{
+				driver = (Driver) userList.get(0);
+			}	
+		}
+		catch (Exception e){
+			throw new Exception("Authentication Error");
+		}
+		finally{
+			if(session != null && session.isOpen()){
+				session.close();
+			}
+		}
+		
+		DriverDTO test = new DriverDTO();
+		test.setAdmin(true);
+		test.setBusID(-1);
+		test.setEmailAddress("2andrewp2@gmail.com");
+		test.setName("Andrew");
+		test.setPassword("Ghosty678");
+		test.setTripSheetID(-1);
+		return driver.getData();
+		
 	}
 
 	@Override
 	public ClientDTO saveStudent(ClientDTO studentDetails) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		Client customer = new Client();
+		customer.setData(studentDetails);
+		
+		//Save
+		Session session = null;
+		try{
+			AnnotationConfiguration config = new AnnotationConfiguration();
+			config.addAnnotatedClass(Client.class);
+			config.configure();
+			SessionFactory factory = config.buildSessionFactory();
+			session = factory.getCurrentSession();
+			session.beginTransaction();
+			if(customer.getID() > 0){
+				session.update(customer);
+			} else {
+				session.save(customer);
+			}
+			session.getTransaction().commit();
+			
+		}
+		catch(Exception e){
+			throw new Exception(e.getMessage() + e.getCause());
+		}
+		finally{
+			if(session != null && session.isOpen()){
+				if(session != null && session.isOpen()){
+					session.close();
+				}
+			}
+		}
+		studentDetails = customer.getData();
+		return studentDetails;
+		
+		//havent tested.
 	}
 
 	@Override
@@ -79,13 +159,68 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements
 
 	@Override
 	public ClientDTO getStudent(int selectedID) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		Client details = new Client();
+		Session session= null;
+		try{
+			AnnotationConfiguration config = new AnnotationConfiguration();
+			config.addAnnotatedClass(Client.class);
+			config.configure();
+			SessionFactory factory = config.buildSessionFactory();
+			session = factory.getCurrentSession();
+			session.beginTransaction();
+			session.load(details, selectedID);
+			session.getTransaction().commit();	
+		}
+		catch (Exception e){
+			System.out.println("Error: " + e.getMessage());
+			throw new Exception(e.getMessage());
+			
+		}
+		finally{
+			if(session != null && session.isOpen()){
+				session.close();
+			}
+		}
+		ClientDTO customerDetails = details.getData();
+		
+		return customerDetails;
+		
 	}
 
 	@Override
-	public void saveDriver(DriverDTO userdetails) throws Exception {
-		// TODO Auto-generated method stub
+	public void saveDriver(DriverDTO driverDetails) throws Exception {
+		Driver driver = new Driver();
+		driver.setData(driverDetails);
+		
+		//Save
+		Session session = null;
+		try{
+			AnnotationConfiguration config = new AnnotationConfiguration();
+			config.addAnnotatedClass(Client.class);
+			config.configure();
+			SessionFactory factory = config.buildSessionFactory();
+			session = factory.getCurrentSession();
+			session.beginTransaction();
+			if(driver.getID() > 0){
+				session.update(driver);
+			} else {
+				session.save(driver);
+			}
+			session.getTransaction().commit();
+			
+		}
+		catch(Exception e){
+			throw new Exception(e.getMessage() + e.getCause());
+		}
+		finally{
+			if(session != null && session.isOpen()){
+				if(session != null && session.isOpen()){
+					session.close();
+				}
+			}
+		}
+
+		//havent tested.
 		
 	}
 

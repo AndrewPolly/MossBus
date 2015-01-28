@@ -10,12 +10,10 @@ import com.google.gwt.user.client.ui.Label;
 public class NavMenu extends Composite {
 
 	private static NavMenuUiBinder uiBinder = GWT.create(NavMenuUiBinder.class);
-	@UiField Label salesMenu;
-	@UiField Label customersMenu;
-	@UiField Label stockCheckMenu;
-	@UiField Label workshopMenu;
-	@UiField Label storesMenu;
-	@UiField Label adminMenu;
+	@UiField Label maintenanceMenu;
+	@UiField Label tripSheetMenu;
+	@UiField Label studentsMenu;
+	@UiField Label driversMenu;
 
 	interface NavMenuUiBinder extends UiBinder<Widget, NavMenu> {
 	}

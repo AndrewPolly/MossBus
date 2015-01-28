@@ -17,7 +17,7 @@ public interface GreetingServiceAsync {
 		void resetDatabase(String string, AsyncCallback<Void> asyncCallback);
 		void doLogin(DriverDTO driverDTO, AsyncCallback<DriverDTO> asyncCallback);
 	//Customers
-		void saveStudent(ClientDTO clientDetails,AsyncCallback<ClientDTO> asyncCallback);
+		void saveStudent(ClientDTO clientDetails, AsyncCallback<ClientDTO> asyncCallback);
 		/**
 		 * don't know what this does or what this means. 
 		 */

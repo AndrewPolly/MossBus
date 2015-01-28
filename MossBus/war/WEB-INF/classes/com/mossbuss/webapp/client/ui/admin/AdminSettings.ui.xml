@@ -1,0 +1,26 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:style>
+	
+	</ui:style>
+	<g:HTMLPanel>
+		<g:AbsolutePanel width="650px" height="519px">
+				<g:at left="10" top="10">
+					<g:Label text="Admin Settings" width="559px" height="19px" horizontalAlignment="ALIGN_CENTER" styleName="headingText"/>
+				</g:at>
+				<g:at left="10" top="150">
+					<g:Button styleName="generalButton" width="131px" height="41px" ui:field="userButton">Users</g:Button>
+				</g:at>
+				<g:at left="10" top="56">
+					<g:Button text="Workshop" styleName="generalButton" width="131px" height="41px" ui:field="workButton"/>
+				</g:at>
+				<g:at left="10" top="103">
+					<g:Button styleName="generalButton" width="131px" height="41px" text="New Item" ui:field="newItem"/>
+				</g:at>
+				<g:at left="147" top="56">
+					<g:AbsolutePanel width="482px" height="453px" ui:field="dataPanel"/>
+				</g:at>
+			</g:AbsolutePanel>
+	</g:HTMLPanel>
+</ui:UiBinder> 

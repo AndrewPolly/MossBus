@@ -1,29 +1,19 @@
 package com.mossbuss.webapp.client;
 
 
-import java.util.ArrayList;
-import java.util.Properties;
-
-import org.marre.SmsSender;
-import org.marre.sms.SmsTextMessage;
-import org.marre.sms.transport.SmsTransport;
-
 import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.RootPanel;
-import com.google.gwt.user.client.ui.SuggestBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.event.dom.client.KeyCodes;
-import com.google.gwt.event.dom.client.KeyDownEvent;
-import com.google.gwt.event.dom.client.KeyDownHandler;
+import com.mossbuss.webapp.client.ui.login.Login;
 
 
 
@@ -49,112 +39,137 @@ public class MossBus implements EntryPoint {
   private Button gotoBusMaintenance = new Button("Bus Maintenance");
   private Label lastUpdatedLabel = new Label();
 
+  
+  private final GreetingServiceAsync greetingService = GWT.create(GreetingService.class);
   //private ArrayList<ArrayList<String>> Clients = new ArrayList<ArrayList<String>>();  
 
   /**
    * Entry point method.
    */
   public void onModuleLoad() {
-	  
-	  
-	// Login start
-	LoginData.setText(0, 0, "User Name");
-	LoginData.setText(0, 1, "Password");
-	passwordInputPanel.add(UserName);
-	passwordInputPanel.add(passWord);
-	passwordMainPanel.add(LoginData);
-	passwordMainPanel.add(passwordInputPanel);
-	RootPanel.get("passwordPanel").add(passwordMainPanel);
-	UserName.setFocus(true);
-	waitForPass();
-	
-	// Set up menu at the top.
-	menuHorizontalPanel.add(gotoTripSheet);
-	menuHorizontalPanel.add(gotoBusMaintenance);
-	menuVerticalPanel.add(menuHorizontalPanel);
-    // Create table for Student data.
-	stocksFlexTable.setText(0, 0, "Account #");
-    stocksFlexTable.setText(0, 1, "Student");
-    stocksFlexTable.setText(0, 2, "Account Holder");
-    stocksFlexTable.setText(0, 3, "Cell Phone #");
-    stocksFlexTable.setText(0, 4, "Email Address");
-    stocksFlexTable.setText(0, 5, "Remove Account");
-    stocksFlexTable.setCellPadding(6);
-    // Add styles to elements in the table
-    stocksFlexTable.getRowFormatter().addStyleName(0, "watchListHeader");
-    stocksFlexTable.addStyleName("watchList");
-    // Assemble Add Stock panel.
-    studentListPanel.add(StudentName);
-    studentListPanel.add(ParentName);
-    studentListPanel.add(ParentCell);
-    studentListPanel.add(ParentEmail);
-    studentListPanel.add(addStockButton);
+		if(com.google.gwt.user.client.Window.Location.getParameter("reset")!= null && 
+				com.google.gwt.user.client.Window.Location.getParameter("reset") == "007"){
+			RootPanel.get("appContainer").clear();
+			RootPanel.get("appContainer").add(new Label("Resetting Database"));
+			greetingService.resetDatabase("Reset", new AsyncCallback<Void>(){
+				@Override
+				public void onFailure(Throwable caught) {
+					Window.alert("Error! " + caught.getMessage());
+				}
 
-    // Assemble Main panel.
-    tripSheetPanel.add(stocksFlexTable);
-    tripSheetPanel.add(studentListPanel);
-    tripSheetPanel.add(lastUpdatedLabel);
-    
-    // Associate the Main panel with the HTML host page.
-    RootPanel.get("studentList").add(tripSheetPanel);
-    RootPanel.get("studentList").clear();
-    // Move cursor focus to the StudentName text box.
-    StudentName.setFocus(true);
-    
-    // Listen for mouse events on the Add button.
-    addStockButton.addClickHandler(new ClickHandler() {
-      public void onClick(ClickEvent event) {
-        addStudent();
-      }
-    });
-    
-    
-    // Listen for keyboard events in the input box.
-    StudentName.addKeyDownHandler(new KeyDownHandler() {
-      public void onKeyDown(KeyDownEvent event) {
-        if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
-          ParentName.setFocus(true);
-        }
-      }
-    });
-    ParentName.addKeyDownHandler(new KeyDownHandler() {
-      public void onKeyDown(KeyDownEvent event) {
-        if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
-          ParentCell.setFocus(true);
-        }
-      }
-    });
-    ParentCell.addKeyDownHandler(new KeyDownHandler() {
-        public void onKeyDown(KeyDownEvent event) {
-          if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
-            ParentEmail.setFocus(true);
-          }
-        }
-      });
-    ParentEmail.addKeyDownHandler(new KeyDownHandler() {
-        public void onKeyDown(KeyDownEvent event) {
-          if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
-            addStudent();
-          }
-        }
-      });
-  }
-  private void waitForPass() {
-	  UserName.addKeyDownHandler(new KeyDownHandler() {
-	        public void onKeyDown(KeyDownEvent event) {
-	          if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
-	            passWord.setFocus(true);
-	          }
-	        }
-	      });
-	  passWord.addKeyDownHandler(new KeyDownHandler() {
-	        public void onKeyDown(KeyDownEvent event) {
-	          if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
-	            checkPass();
-	          }
-	        }
-	      });
-}
+				@Override
+				public void onSuccess(Void result) {
+					Window.alert("Done!");
+					
+				}
+			});
+		}else {
+			Login login = new Login();
+			RootPanel.get("appContainer").add(login);
+			login.setFocus();
+		}
+	}
+//  public void onModuleLoad() {
+//	  
+//	  
+//	// Login start
+//	LoginData.setText(0, 0, "User Name");
+//	LoginData.setText(0, 1, "Password");
+//	passwordInputPanel.add(UserName);
+//	passwordInputPanel.add(passWord);
+//	passwordMainPanel.add(LoginData);
+//	passwordMainPanel.add(passwordInputPanel);
+//	RootPanel.get("passwordPanel").add(passwordMainPanel);
+//	UserName.setFocus(true);
+//	waitForPass();
+//	
+//	// Set up menu at the top.
+//	menuHorizontalPanel.add(gotoTripSheet);
+//	menuHorizontalPanel.add(gotoBusMaintenance);
+//	menuVerticalPanel.add(menuHorizontalPanel);
+//    // Create table for Student data.
+//	stocksFlexTable.setText(0, 0, "Account #");
+//    stocksFlexTable.setText(0, 1, "Student");
+//    stocksFlexTable.setText(0, 2, "Account Holder");
+//    stocksFlexTable.setText(0, 3, "Cell Phone #");
+//    stocksFlexTable.setText(0, 4, "Email Address");
+//    stocksFlexTable.setText(0, 5, "Remove Account");
+//    stocksFlexTable.setCellPadding(6);
+//    // Add styles to elements in the table
+//    stocksFlexTable.getRowFormatter().addStyleName(0, "watchListHeader");
+//    stocksFlexTable.addStyleName("watchList");
+//    // Assemble Add Stock panel.
+//    studentListPanel.add(StudentName);
+//    studentListPanel.add(ParentName);
+//    studentListPanel.add(ParentCell);
+//    studentListPanel.add(ParentEmail);
+//    studentListPanel.add(addStockButton);
+//
+//    // Assemble Main panel.
+//    tripSheetPanel.add(stocksFlexTable);
+//    tripSheetPanel.add(studentListPanel);
+//    tripSheetPanel.add(lastUpdatedLabel);
+//    
+//    // Associate the Main panel with the HTML host page.
+//    RootPanel.get("studentList").add(tripSheetPanel);
+//    RootPanel.get("studentList").clear();
+//    // Move cursor focus to the StudentName text box.
+//    StudentName.setFocus(true);
+//    
+//    // Listen for mouse events on the Add button.
+//    addStockButton.addClickHandler(new ClickHandler() {
+//      public void onClick(ClickEvent event) {
+//        addStudent();
+//      }
+//    });
+//    
+//    
+//    // Listen for keyboard events in the input box.
+//    StudentName.addKeyDownHandler(new KeyDownHandler() {
+//      public void onKeyDown(KeyDownEvent event) {
+//        if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
+//          ParentName.setFocus(true);
+//        }
+//      }
+//    });
+//    ParentName.addKeyDownHandler(new KeyDownHandler() {
+//      public void onKeyDown(KeyDownEvent event) {
+//        if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
+//          ParentCell.setFocus(true);
+//        }
+//      }
+//    });
+//    ParentCell.addKeyDownHandler(new KeyDownHandler() {
+//        public void onKeyDown(KeyDownEvent event) {
+//          if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
+//            ParentEmail.setFocus(true);
+//          }
+//        }
+//      });
+//    ParentEmail.addKeyDownHandler(new KeyDownHandler() {
+//        public void onKeyDown(KeyDownEvent event) {
+//          if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
+//            addStudent();
+//          }
+//        }
+//      });
+//  }
+//  private void waitForPass() {
+//	  UserName.addKeyDownHandler(new KeyDownHandler() {
+//	        public void onKeyDown(KeyDownEvent event) {
+//	          if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
+//	            passWord.setFocus(true);
+//	          }
+//	        }
+//	      });
+//	  passWord.addKeyDownHandler(new KeyDownHandler() {
+//	        public void onKeyDown(KeyDownEvent event) {
+//	          if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
+//	            checkPass();
+//	          }
+//	        }
+//	      });
+//}
 protected void checkPass() {
 	final String User = UserName.getText().trim();
 	final String Password = passWord.getText().trim();

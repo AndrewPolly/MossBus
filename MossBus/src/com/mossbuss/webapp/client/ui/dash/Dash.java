@@ -11,11 +11,10 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.uibinder.client.UiField;
 import com.mossbuss.webapp.client.GreetingService;
 import com.mossbuss.webapp.client.GreetingServiceAsync;
+import com.mossbuss.webapp.client.dto.ClientDTO;
 import com.mossbuss.webapp.client.dto.DriverDTO;
-
-import com.mossbuss.webapp.client.ui.admin.AdminSettings;
-
-
+import com.mossbuss.webapp.client.ui.students.studentEdit;
+import com.mossbuss.webapp.client.ui.students.studentSearch;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class Dash extends Composite {
@@ -30,11 +29,11 @@ public class Dash extends Composite {
 	}
 
 	public Dash() {
-//		initWidget(uiBinder.createAndBindUi(this));
-//		
-//		navMenu.salesMenu.addClickHandler(new ClickHandler() {
-//			@Override
-//			public void onClick(ClickEvent event) {
+		initWidget(uiBinder.createAndBindUi(this));
+		
+		navMenu.maintenanceMenu.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
 //				OrderSearch orderSearch = new OrderSearch();
 //				orderSearch.getNewSaleButton().addClickHandler(new ClickHandler() {
 //					
@@ -48,96 +47,82 @@ public class Dash extends Composite {
 //				});
 //				dataPanel.clear();
 //				dataPanel.add(orderSearch);
-//			}
-//		});
-//		
-//		navMenu.customersMenu.addClickHandler(new ClickHandler() {
-//			@Override
-//			public void onClick(ClickEvent event) {
-//				final CustomerSearch customerSearch = new CustomerSearch();
-//				customerSearch.getCancelButton().setVisible(false);
-//				customerSearch.getSelectButton().setText("Edit");
-//				customerSearch.getSelectButton().addClickHandler(new ClickHandler() {
-//					@Override
-//					public void onClick(ClickEvent event) {
-//						//customerSearch.setVisible(false);
-//						final CustomerEdit customerEdit = new CustomerEdit();
-//						customerEdit.setCustomerDetails(customerSearch.getCustomer());
-//						final PopupPanel pPanel = new PopupPanel();
-//						customerEdit.getCancelButton().addClickHandler(new ClickHandler() {
-//							@Override
-//							public void onClick(ClickEvent event) {
-//								pPanel.hide();
-//								//customerSearch.setVisible(true);
-//							}
-//						});
-//						customerEdit.getSaveButton().addClickHandler(new ClickHandler() {
-//							@Override
-//							public void onClick(ClickEvent event) {
-//								greetingService.saveCustomer(customerEdit.getCustomerDetails(), new AsyncCallback<CustomerDTO>() {
-//
-//									@Override
-//									public void onFailure(Throwable caught) {
-//										// TODO Fix This:
-//										//errorLabel.setText(caught.getMessage());
-//									}
-//
-//									@Override
-//									public void onSuccess(CustomerDTO result) {
-//										customerSearch.setCustomer(result);
-//									}
-//								});
-//								pPanel.hide();
-//								//customerSearch.setVisible(true);
-//							}
-//						});
-//						pPanel.add(customerEdit);
-//						pPanel.setModal(true);
-//						pPanel.center();
-//						customerSearch.init();
-//					}
-//				});
-//				dataPanel.clear();
-//				dataPanel.add(customerSearch);
-//			}
-//		});
-//		
-//		navMenu.stockCheckMenu.addClickHandler(new ClickHandler() {
-//			@Override
-//			public void onClick(ClickEvent event) {
-//				StockLookup stockView = new StockLookup();
-//				dataPanel.clear();
-//				dataPanel.add(stockView);
-//				stockView.init();
-//			}
-//		});
+			}
+		});
 		
-//		navMenu.workshopMenu.addClickHandler(new ClickHandler() {
-//			@Override
-//			public void onClick(ClickEvent event) {
+		navMenu.studentsMenu.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				final studentSearch studentSearch = new studentSearch();
+				studentSearch.getCancelButton().setVisible(false);
+				studentSearch.getSelectButton().setText("Edit");
+				studentSearch.getSelectButton().addClickHandler(new ClickHandler() {
+					@Override
+					public void onClick(ClickEvent event) {
+						//customerSearch.setVisible(false);
+						final studentEdit customerEdit = new studentEdit();
+						customerEdit.setCustomerDetails(studentSearch.getCustomer());
+						final PopupPanel pPanel = new PopupPanel();
+						customerEdit.getCancelButton().addClickHandler(new ClickHandler() {
+							@Override
+							public void onClick(ClickEvent event) {
+								pPanel.hide();
+								//customerSearch.setVisible(true);
+							}
+						});
+						customerEdit.getSaveButton().addClickHandler(new ClickHandler() {
+							@Override
+							public void onClick(ClickEvent event) {
+								greetingService.saveStudent(customerEdit.getStudentDetails(), new AsyncCallback<ClientDTO>() {
+
+									@Override
+									public void onFailure(Throwable caught) {
+										// TODO Fix This:
+										//errorLabel.setText(caught.getMessage());
+									}
+
+									@Override
+									public void onSuccess(ClientDTO result) {
+										studentSearch.setCustomer(result);
+									}
+								});
+								pPanel.hide();
+								//customerSearch.setVisible(true);
+							}
+						});
+						pPanel.add(customerEdit);
+						pPanel.setModal(true);
+						pPanel.center();
+						studentSearch.init();
+					}
+				});
+				dataPanel.clear();
+				dataPanel.add(studentSearch);
+			}
+		});
+		
+		navMenu.tripSheetMenu.addClickHandler(new ClickHandler() {
+			//the view for the students... StudentEdit is where students
+			// will be added.
+			@Override
+			public void onClick(ClickEvent event) {
+//				studentEdit studentView = new studentEdit();
+//				dataPanel.clear();
+//				dataPanel.add(studentView);
+//				studentView.init();
+			}
+		});
+		
+		navMenu.driversMenu.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
 //				StockRequest stockRequest = new StockRequest();
 //				dataPanel.clear();
 //				dataPanel.add(stockRequest);
-//			}
-//		});
-		
-//		navMenu.storesMenu.addClickHandler(new ClickHandler() {
-//			@Override
-//			public void onClick(ClickEvent event) {
-//				StockReceiving stockReceiving = new StockReceiving();
-//				dataPanel.clear();
-//				dataPanel.add(stockReceiving);
-//			}
-//		});
-//		
-		navMenu.adminMenu.addClickHandler(new ClickHandler() {
-			@Override
-			public void onClick(ClickEvent event) {
-				AdminSettings adminSettingsPannel = new AdminSettings();
-				dataPanel.clear();
-				dataPanel.add(adminSettingsPannel);
 			}
 		});
+		
+	
 		
 	}
 
@@ -147,6 +132,6 @@ public class Dash extends Composite {
 
 	public void setOnlineUser(DriverDTO onlineUser) {
 		this.onlineUser = onlineUser;
-		navMenu.adminMenu.setVisible(onlineUser.getAdmin());
+//		navMenu.adminMenu.setVisible(onlineUser.getAdmin());
 	}
 }

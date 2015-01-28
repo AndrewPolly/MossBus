@@ -1,0 +1,47 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:style>
+	.important {
+		font-weight: bold;
+	}
+	</ui:style>
+	<g:HTMLPanel>
+		<g:AbsolutePanel height="297px" width="510px">
+			<g:at left="10" top="10">
+				<g:Label text="User Editor" width="430px" height="18px" styleName="headingText" horizontalAlignment="ALIGN_CENTER"/>
+			</g:at>
+			<g:at left="10" top="269">
+				<g:Label text="ID" ui:field="idLabel"/>
+			</g:at>
+			<g:at left="400" top="246">
+				<g:Button styleName="generalButton" ui:field="saveButton">Save</g:Button>
+			</g:at>
+			<g:at left="10" top="59">
+				<g:Label text="Email"/>
+			</g:at>
+			<g:at left="87" top="55">
+				<g:TextBox styleName="entrText" width="409px" height="16px" ui:field="email"/>
+			</g:at>
+			<g:at left="10" top="87">
+				<g:Label text="Password"/>
+			</g:at>
+			<g:at left="87" top="83">
+				<g:TextBox styleName="entrText" width="409px" height="16px" ui:field="password"/>
+			</g:at>
+			<g:at left="10" top="115">
+				<g:Label text="Name"/>
+			</g:at>
+			<g:at left="86" top="111">
+				<g:TextBox styleName="entrText" width="410px" height="16px" ui:field="name"/>
+			</g:at>
+			<g:at left="435" top="139">
+				<g:CheckBox text="Admin" width="65px" height="20px" ui:field="adminCheck"/>
+			</g:at>
+			<g:at left="276" top="246">
+				<g:Button styleName="generalButton" ui:field="cancelButton">Cancel</g:Button>
+			</g:at>
+		</g:AbsolutePanel>
+
+	</g:HTMLPanel>
+</ui:UiBinder> 
