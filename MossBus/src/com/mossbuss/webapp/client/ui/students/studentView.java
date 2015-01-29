@@ -48,10 +48,6 @@ public class studentView extends Composite {
 
 	public void setCustomerDetails(ClientDTO customerDetails) {
 		this.customerDetails = customerDetails;
-		studentList = customerDetails.getStudentNames();
-		// instead of one student, add a drop down box of all students
-		// associated with the parent
-		studentName.setText(studentList.get(0));
 		parentName.setText(customerDetails.getParentName());
 		cellNumber.setText(customerDetails.getCellNumber());
 		emailAddress.setText(customerDetails.getEmailAddress());

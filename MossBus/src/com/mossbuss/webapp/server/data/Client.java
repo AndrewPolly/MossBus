@@ -18,11 +18,8 @@ public class Client {
 	
 	private int id;
 	private int payOption;			// The payment option of the client
-	private int tripSheetID;		// The trip sheet the student is assigned to
-	private int driverID;			// the driver the student is assigned to
 	private float accBal;			// The account balance of the client
-	private String emailAddress; 
-	private ArrayList<String> studentNames;
+	private String emailAddress;
 	private String parentName;
 	private String cellNumber;
 	private String Address;
@@ -39,21 +36,6 @@ public class Client {
 		payOption = PayOption;
 	}
 	
-	@Column(name="TripSheetID")
-	public int getTripSheetID() {
-		return tripSheetID;
-	}
-	public void setTripSheetID(int TripSheetID) {
-		tripSheetID = TripSheetID;
-	}
-	
-	@Column(name="DriverID")
-	public int getDriverID() {
-		return driverID;
-	}
-	public void setDriverID(int DriverID) {
-		driverID = DriverID;
-	}
 	
 	@Column(name="AccountBalance")
 	public float getAccBal() {
@@ -71,16 +53,6 @@ public class Client {
 		emailAddress = EmailAddress;
 	}
 	
-	@Column(name="StudentName")
-	public ArrayList<String> getStudentNames() {
-		return studentNames;
-	}
-	public void setStudentNames(ArrayList<String> StudentNames) {
-		this.studentNames = StudentNames;
-	}
-	public void addStudentName(String StudentName) {
-		this.studentNames.add(StudentName);
-	}
 	
 	@Column(name="ParentName")
 	public String getParentName() {
@@ -118,11 +90,8 @@ public class Client {
 		ClientDTO client = new ClientDTO();
 		client.setID(this.getID());
 		client.setPayOption(this.getPayOption());
-		client.setTripSheetID(this.getTripSheetID());
-		client.setDriverID(this.getDriverID());
 		client.setAccBal(this.getAccBal());
 		client.setEmailAddress(this.getEmailAddress());
-		client.setStudentNames(this.getStudentNames());
 		client.setParentName(this.getParentName());
 		client.setCellNumber(this.getCellNumber());
 		return client;
@@ -132,11 +101,8 @@ public class Client {
 	public void setData(ClientDTO client){
 		this.setID(client.getID());
 		this.setPayOption(client.getPayOption());
-		this.setTripSheetID(client.getTripSheetID());
-		this.setDriverID(client.getDriverID());
 		this.setAccBal(client.getAccBal());
 		this.setEmailAddress(client.getEmailAddress());
-		this.setStudentNames(client.getStudentNames());
 		this.setParentName(client.getParentName());
 		this.setCellNumber(client.getCellNumber());
 	}

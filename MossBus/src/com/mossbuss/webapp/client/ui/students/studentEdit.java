@@ -15,14 +15,16 @@ import com.google.gwt.user.client.ui.TabPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.mossbuss.webapp.client.dto.ClientDTO;
+import com.mossbuss.webapp.client.dto.StudentDTO;
 
 public class studentEdit extends Composite {
 
 	private static studentEditUiBinder uiBinder = GWT.create(studentEditUiBinder.class);
 	
 	private ClientDTO clientDetails = new ClientDTO();
-	private ArrayList<String> Students = new ArrayList<String>();
 	
+	private ArrayList<String> Students = new ArrayList<String>();
+	private StudentDTO studentDetails;
 	@UiField TabPanel tPanel;
 	@UiField TextBox addressField;
 
@@ -55,21 +57,26 @@ public class studentEdit extends Composite {
 	public Button getCancelButton() {
 		return cancelButton;
 	}
+	public Button getAddStudentButton() {
+		return addStudentButton;
+	}
 	public Button getSaveButton() {
 		return saveButton;
 	}
 
-	public ClientDTO getStudentDetails() {
+	public ClientDTO getClientDetails() {
 		clientDetails.setAddress(addressField.getText());
 		clientDetails.setParentName(parentName.getText());
 		clientDetails.setEmailAddress(emailAddress.getText());
 		clientDetails.setCellNumber(cellNumber.getText());
-		clientDetails.setAddress(addressField.getText());
+		
+		
 		clientDetails.setAccBal(0);
+		
 		return clientDetails;
 	}
 
-	public void setCustomerDetails(ClientDTO clientDetails) {
+	public void setClientDetails(ClientDTO clientDetails) {
 		this.clientDetails = clientDetails;
 		parentName.setText(clientDetails.getParentName());
 		clientDetails.setParentName(parentName.getText());
@@ -78,10 +85,21 @@ public class studentEdit extends Composite {
 		cellNumber.setText(clientDetails.getCellNumber());
 		addressField.setText(clientDetails.getAddress());
 	}
-	
-	@UiHandler("nextButton")
-	void onNextButtonClick(ClickEvent event) {
-		tPanel.selectTab(1);
+	public StudentDTO getStudentDetails() {
+		studentDetails.setParentName(clientDetails.getParentName());
+		studentDetails.setParentID(clientDetails.getID());
+		studentDetails.setStudentName(studentNames.getText());
+		studentDetails.setAddress(clientDetails.getAddress());
+		return studentDetails;
+	}
+
+	public void setStudentDetails(StudentDTO studentDetails) {
+		this.studentDetails = studentDetails;
+		parentName.setText(studentDetails.getParentName());
+		studentNames.setText(studentDetails.getStudentName());
+	}
+	public void selectTpanel(int selector) {
+		tPanel.selectTab(selector);
 	}
 	@UiHandler("backbutton1")
 	void onBackbutton1Click(ClickEvent event) {
@@ -90,17 +108,6 @@ public class studentEdit extends Composite {
 	@UiHandler("nextButton2")
 	void onNextButton2Click(ClickEvent event) {
 		tPanel.selectTab(2);
-	}
-	@UiHandler("addStudentButton")
-	void onAddStudentButtonClick(ClickEvent event) {
-		if (clientDetails.getStudentNames() == null) {
-			Students.add(studentNames.getText());
-			clientDetails.setStudentNames(Students);
-		} else {			
-			clientDetails.addStudentName(studentNames.getText());
-		}
-		studentNames.setText("");
-		studentNames.setFocus(true);
 	}
 	@UiHandler("backButton3")
 	void onBackButton3Click(ClickEvent event) {

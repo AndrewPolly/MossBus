@@ -7,6 +7,7 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.mossbuss.webapp.client.dto.BusDTO;
 import com.mossbuss.webapp.client.dto.ClientDTO;
 import com.mossbuss.webapp.client.dto.DriverDTO;
+import com.mossbuss.webapp.client.dto.StudentDTO;
 import com.mossbuss.webapp.client.dto.TripSheetDTO;
 
 
@@ -21,14 +22,15 @@ public interface GreetingService extends RemoteService {
 	DriverDTO doLogin(DriverDTO driverDTO) throws Exception;
 //Customers
 	
-	ClientDTO saveStudent(ClientDTO studentDetails) throws Exception;
+	StudentDTO saveStudent(StudentDTO studentDetails) throws Exception;
 	/**
 	 * don't know what this does or what this means. 
 	 */
+	ClientDTO saveClient(ClientDTO clientDetails) throws Exception;
 	ArrayList<String> updateContactNameOracle(String sql) throws Exception;
 	
-	ClientDTO getStudent(int selectedID) throws Exception;
-
+	StudentDTO getStudent(int selectedID) throws Exception;
+	ClientDTO getClient(int selectedID) throws Exception;
 	
 
 	

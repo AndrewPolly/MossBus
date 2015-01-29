@@ -13,6 +13,7 @@ import com.mossbuss.webapp.client.GreetingService;
 import com.mossbuss.webapp.client.GreetingServiceAsync;
 import com.mossbuss.webapp.client.dto.ClientDTO;
 import com.mossbuss.webapp.client.dto.DriverDTO;
+import com.mossbuss.webapp.client.dto.StudentDTO;
 import com.mossbuss.webapp.client.ui.students.studentEdit;
 import com.mossbuss.webapp.client.ui.students.studentSearch;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -61,7 +62,7 @@ public class Dash extends Composite {
 					public void onClick(ClickEvent event) {
 						//customerSearch.setVisible(false);
 						final studentEdit customerEdit = new studentEdit();
-						customerEdit.setCustomerDetails(studentSearch.getCustomer());
+						customerEdit.setClientDetails(studentSearch.getClient());
 						final PopupPanel pPanel = new PopupPanel();
 						customerEdit.getCancelButton().addClickHandler(new ClickHandler() {
 							@Override
@@ -70,10 +71,11 @@ public class Dash extends Composite {
 								//customerSearch.setVisible(true);
 							}
 						});
-						customerEdit.getSaveButton().addClickHandler(new ClickHandler() {
+						//TODO: THIS IS ALL FUCKED UP.
+						customerEdit.getNextButton().addClickHandler(new ClickHandler() {
 							@Override
 							public void onClick(ClickEvent event) {
-								greetingService.saveStudent(customerEdit.getStudentDetails(), new AsyncCallback<ClientDTO>() {
+								greetingService.saveClient(customerEdit.getClientDetails(), new AsyncCallback<ClientDTO>() {
 
 									@Override
 									public void onFailure(Throwable caught) {
@@ -86,8 +88,46 @@ public class Dash extends Composite {
 										studentSearch.setCustomer(result);
 									}
 								});
+								//pPanel.hide();
+								//customerSearch.setVisible(true);
+								customerEdit.selectTpanel(1);
+							}
+						});
+						customerEdit.getSaveButton().addClickHandler(new ClickHandler() {
+							@Override
+							public void onClick(ClickEvent event) {
+//								greetingService.saveClient(customerEdit.getClientDetails(), new AsyncCallback<ClientDTO>() {
+//
+//									@Override
+//									public void onFailure(Throwable caught) {
+//										// TODO Fix This:
+//										//errorLabel.setText(caught.getMessage());
+//									}
+//
+//									@Override
+//									public void onSuccess(ClientDTO result) {
+//										studentSearch.setCustomer(result);
+//									}
+//								});
 								pPanel.hide();
 								//customerSearch.setVisible(true);
+							}
+						});
+						customerEdit.getAddStudentButton().addClickHandler(new ClickHandler() {
+							@Override
+							public void onClick(ClickEvent event) {
+								greetingService.saveStudent(customerEdit.getStudentDetails(), new AsyncCallback<StudentDTO>() {
+									@Override
+									public void onFailure(Throwable caught) {
+										//TODO FIX THIS:
+										//errorLabel.setText(caught.getMessage());
+									}
+									@Override
+									public void onSuccess(StudentDTO result) {
+										studentSearch.setStudent(result);
+									}
+								});
+								pPanel.hide();
 							}
 						});
 						pPanel.add(customerEdit);

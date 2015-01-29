@@ -7,6 +7,7 @@ import com.mossbuss.webapp.client.dto.ClientDTO;
 import com.mossbuss.webapp.client.dto.BusDTO;
 import com.mossbuss.webapp.client.dto.MaintenanceRecordDTO;
 import com.mossbuss.webapp.client.dto.DriverDTO;
+import com.mossbuss.webapp.client.dto.StudentDTO;
 import com.mossbuss.webapp.client.dto.TripSheetDTO;
 
 /**
@@ -17,13 +18,14 @@ public interface GreetingServiceAsync {
 		void resetDatabase(String string, AsyncCallback<Void> asyncCallback);
 		void doLogin(DriverDTO driverDTO, AsyncCallback<DriverDTO> asyncCallback);
 	//Customers
-		void saveStudent(ClientDTO clientDetails, AsyncCallback<ClientDTO> asyncCallback);
+		void saveStudent(StudentDTO studentDetails, AsyncCallback<StudentDTO> asyncCallback);
+		void saveClient(ClientDTO clientDetails, AsyncCallback<ClientDTO> asyncCallback);
 		/**
 		 * don't know what this does or what this means. 
 		 */
 		void updateContactNameOracle(String sql,AsyncCallback<ArrayList<String>> asyncCallback);
-		void getStudent(int selectedID, AsyncCallback<ClientDTO> asyncCallback);
-		
+		void getStudent(int selectedID, AsyncCallback<StudentDTO> asyncCallback);
+		void getClient(int selectedID, AsyncCallback<ClientDTO> asyncCallback);
 
 		
 	//Admin

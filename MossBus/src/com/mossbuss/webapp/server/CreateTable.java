@@ -9,6 +9,7 @@ import com.mossbuss.webapp.server.data.Driver;
 import com.mossbuss.webapp.server.data.Bus;
 import com.mossbuss.webapp.server.data.Client;
 import com.mossbuss.webapp.server.data.MaintenanceRecord;
+import com.mossbuss.webapp.server.data.Student;
 import com.mossbuss.webapp.server.data.TripSheet;
 
 
@@ -30,6 +31,7 @@ public class CreateTable {
 		config.addAnnotatedClass(Client.class);
 		config.addAnnotatedClass(MaintenanceRecord.class);
 		config.addAnnotatedClass(TripSheet.class);
+		config.addAnnotatedClass(Student.class);
 		
 
 			//Action

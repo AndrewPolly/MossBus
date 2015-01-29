@@ -1,6 +1,8 @@
 package com.mossbuss.webapp.client.ui.students;
 
 import java.util.ArrayList;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -24,6 +26,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.mossbuss.webapp.client.GreetingService;
 import com.mossbuss.webapp.client.GreetingServiceAsync;
 import com.mossbuss.webapp.client.dto.ClientDTO;
+import com.mossbuss.webapp.client.dto.StudentDTO;
 
 
 @SuppressWarnings("deprecation")
@@ -33,7 +36,8 @@ public class studentSearch extends Composite {
 	private final GreetingServiceAsync greetingService = GWT.create(GreetingService.class);
 	MultiWordSuggestOracle contactNameOracle;
 	
-	private ClientDTO customer;
+	private ClientDTO client;
+	private StudentDTO student;
 	@UiField Button newCustomerButton;
 	@UiField studentView customerViewPanel;
 	@UiField Button cancelButton;
@@ -58,14 +62,33 @@ public class studentSearch extends Composite {
 		contactNameText.setFocus(true);
 	}
 
-	public ClientDTO getCustomer() {
-		return customer;
+	public ClientDTO getClient() {
+		return client;
 	}
 
-	public void setCustomer(ClientDTO customer) {
-		this.customer = customer;
-		customerViewPanel.setCustomerDetails(customer);
+	public void setCustomer(ClientDTO client) {
+		this.client = client;
+		customerViewPanel.setCustomerDetails(client);
 		customerViewPanel.setVisible(true);
+	}
+	public StudentDTO getStudent() {
+		return student;
+	}
+	public void setStudent(StudentDTO Student) {
+		this.student = Student;
+		greetingService.getClient(student.getParentID(), new AsyncCallback<ClientDTO>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				errorLabel.setText(caught.getMessage());
+			}
+
+			@Override
+			public void onSuccess(ClientDTO result) {
+				customerViewPanel.setCustomerDetails(result);
+			}
+		});
+		
 	}
 	@UiHandler("newCustomerButton")
 	void onNewCustomerButtonClick(ClickEvent event) {
@@ -81,7 +104,7 @@ public class studentSearch extends Composite {
 			@Override
 			public void onClick(ClickEvent event) {
 				errorLabel.setText("");
-				greetingService.saveStudent(studentEdit.getStudentDetails(), new AsyncCallback<ClientDTO>() {
+				greetingService.saveClient(studentEdit.getClientDetails(), new AsyncCallback<ClientDTO>() {
 
 					@Override
 					public void onFailure(Throwable caught) {
@@ -114,10 +137,10 @@ public class studentSearch extends Composite {
 				ArrayList<String> wordList = new ArrayList<String>();
 				String[] words = contactNameText.getText().split(" ");
 				for (String word : words){
-				   //System.out.println(word);
+				   System.out.println(word);
 				   wordList.add(word);
 				}
-				String sql = "select id, contact, ParentName from client where client Like '%" + wordList.get(0)+"%' or company Like '%" + wordList.get(0)+"%'";
+				String sql = "select id, EmailAddress, ParentName from client where ParentName Like '%" + wordList.get(0)+"%' or StudentName Like '%" + wordList.get(0)+"%'";
 				sql = sql + "Limit 0,50";
 				System.out.println(sql);
 				if(event.isAltKeyDown() || event.isControlKeyDown() || event.isDownArrow() || event.isLeftArrow() || event.isRightArrow() | event.isUpArrow()){
@@ -164,7 +187,7 @@ public class studentSearch extends Composite {
 			int endIndex = suggestion.indexOf(" :: ");
 			suggestion = suggestion.substring(0, endIndex);
 			int selectedID = Integer.parseInt(suggestion);
-			greetingService.getStudent(selectedID, new AsyncCallback<ClientDTO>() {
+			greetingService.getClient(selectedID, new AsyncCallback<ClientDTO>() {
 				
 				@Override
 				public void onSuccess(ClientDTO result) {

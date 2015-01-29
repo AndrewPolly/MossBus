@@ -1,8 +1,16 @@
 package com.mossbuss.webapp.server;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.ServletException;
+import javax.sql.DataSource;
+
+import org.eclipse.jetty.util.log.StdErrLog;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -12,14 +20,15 @@ import com.mossbuss.webapp.client.GreetingService;
 import com.mossbuss.webapp.client.dto.BusDTO;
 import com.mossbuss.webapp.client.dto.ClientDTO;
 import com.mossbuss.webapp.client.dto.DriverDTO;
+import com.mossbuss.webapp.client.dto.StudentDTO;
 import com.mossbuss.webapp.client.dto.TripSheetDTO;
 import com.mossbuss.webapp.shared.FieldVerifier;
 import com.mossbuss.webapp.server.data.Driver;
 import com.mossbuss.webapp.server.data.Client;
 import com.mossbuss.webapp.server.data.Bus;
 import com.mossbuss.webapp.server.data.MaintenanceRecord;
+import com.mossbuss.webapp.server.data.Student;
 import com.mossbuss.webapp.server.data.TripSheet;
-
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 /**
@@ -29,25 +38,19 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 public class GreetingServiceImpl extends RemoteServiceServlet implements
 		GreetingService {
 
-	public String greetServer(String input) throws IllegalArgumentException {
-		// Verify that the input is valid. 
-		if (!FieldVerifier.isValidName(input)) {
-			// If the input is not valid, throw an IllegalArgumentException back to
-			// the client.
-			throw new IllegalArgumentException(
-					"Name must be at least 4 characters long");
+	protected DataSource serverDataSource = null;
+	public void init() throws ServletException {// create database connection
+		// pools
+		try {
+			serverDataSource = new ServerTestDataSource();
 		}
-
-		String serverInfo = getServletContext().getServerInfo();
-		String userAgent = getThreadLocalRequest().getHeader("User-Agent");
-
-		// Escape data from the client to avoid cross-site script vulnerabilities.
-		input = escapeHtml(input);
-		userAgent = escapeHtml(userAgent);
-
-		return "Hello, " + input + "!<br><br>I am running " + serverInfo
-				+ ".<br><br>It looks like you are using:<br>" + userAgent;
+		catch (ClassNotFoundException e1) {
+			System.out.println("serverDataSource Error: "+e1.getMessage());
+			e1.printStackTrace();
+		}
 	}
+	
+	
 
 	/**
 	 * Escape an html string. Escaping data received from the client helps to
@@ -113,9 +116,9 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements
 	}
 
 	@Override
-	public ClientDTO saveStudent(ClientDTO studentDetails) throws Exception {
-		Client customer = new Client();
-		customer.setData(studentDetails);
+	public StudentDTO saveStudent(StudentDTO studentDetails) throws Exception {
+		Student student = new Student();
+		student.setData(studentDetails);
 		
 		//Save
 		Session session = null;
@@ -126,10 +129,10 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements
 			SessionFactory factory = config.buildSessionFactory();
 			session = factory.getCurrentSession();
 			session.beginTransaction();
-			if(customer.getID() > 0){
-				session.update(customer);
+			if(student.getID() > 0){
+				session.update(student);
 			} else {
-				session.save(customer);
+				session.save(student);
 			}
 			session.getTransaction().commit();
 			
@@ -144,7 +147,7 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements
 				}
 			}
 		}
-		studentDetails = customer.getData();
+		studentDetails = student.getData();
 		return studentDetails;
 		
 		//havent tested.
@@ -153,17 +156,59 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements
 	@Override
 	public ArrayList<String> updateContactNameOracle(String sql)
 			throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<String> oracle = new ArrayList<String>();
+		//Do Lookup
+				Statement stmt = null;
+				Connection conn = null;
+				ResultSet rs = null;
+				ResultSet srs = null;
+				try {
+					synchronized (serverDataSource) {
+						conn = serverDataSource.getConnection();
+					}
+					stmt = conn.createStatement();
+					rs = stmt.executeQuery(sql);
+				
+					while(rs.next()) {			
+						oracle.add(rs.getInt("id")+" :: "+rs.getString("ParentName")+ "; " +rs.getString("EmailAddress"));
+					}
+					
+//					srs = stmt.executeQuery("select * from StudentName");
+//					while(srs.next()) {
+//						//System.out.println("" + srs.);
+//					}
+				
+				} finally {
+					if (rs != null) {
+						try { rs.close(); } catch(SQLException ex) {}
+						rs=null;
+					}
+					if (stmt != null) {
+						try { stmt.close(); } catch(SQLException ex) {}
+						stmt = null;
+					}
+					if (conn != null) {
+						try { conn.close(); } catch(SQLException ex) {}
+						conn = null;
+					}
+				}
+		return oracle;
+		//??????? does nothing...
+				//ok it will work the same now..
+		//the connection is not using Hibernate which is why it needs a datasource file. 
+		//yeah what i mainly wanted to know is how to handle the DB calls "customer Like etc"
+		//must i still do this method? ofcourse im sure..
+		//yes.. without it you won't get suggestions
+		//okay awesome, i wanna get this and printing of trip sheets done by the end of today.. 
 	}
 
 	@Override
-	public ClientDTO getStudent(int selectedID) throws Exception {
-		Client details = new Client();
+	public StudentDTO getStudent(int selectedID) throws Exception {
+		Student details = new Student();
 		Session session= null;
 		try{
 			AnnotationConfiguration config = new AnnotationConfiguration();
-			config.addAnnotatedClass(Client.class);
+			config.addAnnotatedClass(Student.class);
 			config.configure();
 			SessionFactory factory = config.buildSessionFactory();
 			session = factory.getCurrentSession();
@@ -181,7 +226,7 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements
 				session.close();
 			}
 		}
-		ClientDTO customerDetails = details.getData();
+		StudentDTO customerDetails = details.getData();
 		
 		return customerDetails;
 		
@@ -253,5 +298,77 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements
 			throws Exception {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+
+
+
+
+
+	@Override
+	public ClientDTO saveClient(ClientDTO clientDetails) throws Exception {
+		Client client = new Client();
+		client.setData(clientDetails);
+		System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX CLIENT ADDRESS IS : " + clientDetails.getAddress());
+		//Save
+		Session session = null;
+		try{
+			AnnotationConfiguration config = new AnnotationConfiguration();
+			config.addAnnotatedClass(Client.class);
+			config.configure();
+			SessionFactory factory = config.buildSessionFactory();
+			session = factory.getCurrentSession();
+			session.beginTransaction();
+			if(client.getID() > 0){
+				session.update(client);
+			} else {
+				session.save(client);
+			}
+			session.getTransaction().commit();
+			
+		}
+		catch(Exception e){
+			throw new Exception(e.getMessage() + e.getCause());
+		}
+		finally{
+			if(session != null && session.isOpen()){
+				if(session != null && session.isOpen()){
+					session.close();
+				}
+			}
+		}
+		clientDetails = client.getData();
+		return clientDetails;
+		
+		//havent tested.
+	}
+	@Override
+	public ClientDTO getClient(int selectedID) throws Exception {
+		Client details = new Client();
+		Session session= null;
+		try{
+			AnnotationConfiguration config = new AnnotationConfiguration();
+			config.addAnnotatedClass(Client.class);
+			config.configure();
+			SessionFactory factory = config.buildSessionFactory();
+			session = factory.getCurrentSession();
+			session.beginTransaction();
+			session.load(details, selectedID);
+			session.getTransaction().commit();	
+		}
+		catch (Exception e){
+			System.out.println("Error: " + e.getMessage());
+			throw new Exception(e.getMessage());
+			
+		}
+		finally{
+			if(session != null && session.isOpen()){
+				session.close();
+			}
+		}
+		ClientDTO customerDetails = details.getData();
+		
+		return customerDetails;
+		
 	}
 }
