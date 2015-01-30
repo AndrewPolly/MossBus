@@ -29,6 +29,7 @@ public class TripSheetView extends Composite {
 	
 	@UiField QuoteGrid studentsGrid;
 	@UiField Label errorLabel;
+	@UiField Button closeButton;
 	interface TripSheetViewUiBinder extends UiBinder<Widget, TripSheetView> {
 	}
 
@@ -61,7 +62,9 @@ public class TripSheetView extends Composite {
 		studentsGrid.setGridItems(studentList);
 		studentsGrid.drawGrid();
 	}
-	
+	public Button getCloseButton() {
+		return closeButton;
+	}
 
 
 }

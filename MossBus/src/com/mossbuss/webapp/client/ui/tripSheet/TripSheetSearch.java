@@ -17,15 +17,19 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.KeyDownEvent;
 import com.google.gwt.event.dom.client.KeyDownHandler;
 import com.google.gwt.user.client.ui.SuggestBox;
 import com.google.gwt.user.client.ui.Label;
 import com.mossbuss.webapp.client.GreetingService;
 import com.mossbuss.webapp.client.GreetingServiceAsync;
+import com.mossbuss.webapp.client.dto.BusDTO;
 import com.mossbuss.webapp.client.dto.ClientDTO;
+import com.mossbuss.webapp.client.dto.DriverDTO;
 import com.mossbuss.webapp.client.dto.StudentDTO;
 import com.mossbuss.webapp.client.dto.TripSheetDTO;
 
@@ -37,6 +41,8 @@ public class TripSheetSearch extends Composite {
 	private final GreetingServiceAsync greetingService = GWT.create(GreetingService.class);
 	MultiWordSuggestOracle contactNameOracle;
 	
+	private DriverDTO driver;
+	private BusDTO bus;
 	private TripSheetDTO TripSheet;
 	private ArrayList<StudentDTO> student = new ArrayList<StudentDTO>();
 	@UiField Button newTripSheetButton;
@@ -65,7 +71,9 @@ public class TripSheetSearch extends Composite {
 	public TripSheetDTO getTripSheet() {
 		return TripSheet;
 	}
-
+	public Button getSelectButton() {
+		return tripSheetViewPanel.getCloseButton();
+	}
 	public void setTripSheet(TripSheetDTO tripSheet) {
 		this.TripSheet = tripSheet;
 		tripSheetViewPanel.setTripSheet(tripSheet);
@@ -76,6 +84,7 @@ public class TripSheetSearch extends Composite {
 	void onNewTripSheetButtonClick(ClickEvent event) {
 		final TripSheetEdit tripSheetEdit = new TripSheetEdit();
 		final PopupPanel pPanel = new PopupPanel();
+		tripSheetEdit.init();
 		tripSheetEdit.getCancelButton().addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
@@ -86,7 +95,7 @@ public class TripSheetSearch extends Composite {
 			@Override
 			public void onClick(ClickEvent event) {
 				errorLabel.setText("");
-				greetingService.saveTripSheet(tripSheetEdit.getTripSheetDetails(), new AsyncCallback<TripSheetDTO>() {
+				greetingService.saveTripSheet(TripSheet, new AsyncCallback<TripSheetDTO>() {
 
 					@Override
 					public void onFailure(Throwable caught) {
@@ -101,12 +110,34 @@ public class TripSheetSearch extends Composite {
 				pPanel.hide();
 			}
 		});
+		tripSheetEdit.getDriverSelectBox().addChangeHandler(new ChangeHandler() {
+
+			@Override
+			public void onChange(ChangeEvent event) {
+				driver = tripSheetEdit.getDriverSelection();
+				updateDriver(driver);
+			}
+		});
+		tripSheetEdit.getBusSelectBox().addChangeHandler(new ChangeHandler() {
+
+			@Override
+			public void onChange(ChangeEvent event) {
+				bus = tripSheetEdit.getBusSelection();
+				updateBus(bus);
+			}
+		});
 		pPanel.add(tripSheetEdit);
 		pPanel.setModal(true);
 		pPanel.center();
 	}
 	public Button getCancelButton(){
 		return cancelButton;
+	}
+	public void updateDriver(DriverDTO driver) {
+		this.TripSheet.setDriverID(driver.getID());
+	}
+	public void updateBus(BusDTO bus) {
+		this.TripSheet.setBusID(bus.getID());
 	}
 //	public Button getSelectButton(){
 //		return tripSheetViewPanel.getCloseButton();

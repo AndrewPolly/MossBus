@@ -60,25 +60,37 @@ public class TripSheetEdit extends Composite {
 	public Button getSaveButton() {
 		return saveButton;
 	}
+	public ListBox getBusSelectBox() {
+		return busSelectBox;
+	}
+	public ListBox getDriverSelectBox() {
+		return driverSelectBox;
+	}
 	public void init() {
+		System.out.println("AT INIT DOING SOMETHING HERE XXXXXXXXXXXX");
 		greetingService.getAllDrivers(new AsyncCallback<ArrayList<DriverDTO>>() {
 
 			@Override
 			public void onFailure(Throwable caught) {
 				// TODO Fix This:
 				//errorLabel.setText(caught.getMessage());
+				System.out.println("Got to failure.!!!!");
 			}
 
 			@Override
 			public void onSuccess(ArrayList<DriverDTO> result) {
 				Drivers = result;
+				System.out.println("DriverArray LIST SIZE IS : " + Drivers.size());
+				System.out.println("DriverArray LIS XXXX T SIZE IS : " + Drivers.size());
+				for (int i = 0;  i < Drivers.size(); i++) {
+					if (Drivers.get(i).getTripSheetID() < 0) {
+						driverSelectBox.addItem(Drivers.get(i).getName());
+						System.out.println("Driver AT ID: " + i + " is: " + Drivers.get(i).getName());
+					}
+				}
 			}
 		});
-		for (int i = 0;  i < Drivers.size(); i++) {
-			if (Drivers.get(i).getTripSheetID() < 0) {
-				driverSelectBox.addItem(Drivers.get(i).getName());
-			}
-		}
+		
 		greetingService.getAllBusses(new AsyncCallback<ArrayList<BusDTO>>() {
 
 			@Override
@@ -96,47 +108,89 @@ public class TripSheetEdit extends Composite {
 			
 			if (Busses.get(i).getTripSheetID() < 0) {
 				busSelectBox.addItem(Busses.get(i).getBusName());
+				System.out.println("BUS AT ID: " + i + " is: " + Busses.get(i).getBusName());
 			}
 		}
 		
 	}
 	public TripSheetDTO getTripSheet() {
-		tripDetails.setTripName(tripNameField.getText());
-		busSelectBox.get
-		tripDetails.setParentName(parentName.getText());
-		tripDetails.setEmailAddress(emailAddress.getText());
-		tripDetails.setCellNumber(cellNumber.getText());
-		
-		
-		
-		
-		return tripDetails;
+		TripSheetDTO trip = new TripSheetDTO();
+		trip.setTripName(tripNameField.getText());
+		trip.setDriverID(getDriverSelection().getID());
+		trip.setBusID(getBusSelection().getID());
+		trip.setDriverName(getDriverSelection().getName());
+		return trip;
 	}
-
 	public void setTripSheet(TripSheetDTO tripSheet) {
 		this.tripDetails = tripSheet;
 		tripNameField.setText(tripDetails.getTripName());
-		
-		driverSelectBox.
-		emailAddress.setText(clientDetails.getEmailAddress());
-		cellNumber.setText(clientDetails.getCellNumber());
-		addressField.setText(clientDetails.getAddress());
-	}
-	public StudentDTO getStudentDetails() {
-		studentDetails.setParentName(clientDetails.getParentName());
-		studentDetails.setParentID(clientDetails.getID());
-		studentDetails.setStudentName(studentNames.getText());
-		studentDetails.setAddress(clientDetails.getAddress());
-		return studentDetails;
+		init();
+		driverSelectBox.setItemSelected(getDriverIntSelection(), true);
+		busSelectBox.setItemSelected(getBusIntSelection(), true);
 	}
 
-	public void setStudentDetails(StudentDTO studentDetails) {
-		this.studentDetails = studentDetails;
-		parentName.setText(studentDetails.getParentName());
-		studentNames.setText(studentDetails.getStudentName());
-	}
 	public void selectTpanel(int selector) {
 		tPanel.selectTab(selector);
+	}
+	public int getDriverIntSelection() {
+		int Item = driverSelectBox.getSelectedIndex();
+		int counter = 0;
+		
+		for (int i = 0;  i < Drivers.size(); i++) {
+			if (Drivers.get(i).getTripSheetID() < 0) {
+				counter++;
+				if (counter == Item) {
+					return counter;
+				}
+			}
+		}
+		//this should never happen;
+		return 0;
+	}
+	public int getBusIntSelection() {
+		int Item = busSelectBox.getSelectedIndex();
+		int counter = 0;
+		
+		for (int i = 0;  i < Busses.size(); i++) {
+			if (Busses.get(i).getTripSheetID() < 0) {
+				counter++;
+				if (counter == Item) {
+					return counter;
+				}
+			}
+		}
+		//this should never happen;
+		return 0;
+	}
+	public DriverDTO getDriverSelection() {
+		int Item = driverSelectBox.getSelectedIndex();
+		int counter = 0;
+		DriverDTO selectedDriver = new DriverDTO();
+		for (int i = 0;  i < Drivers.size(); i++) {
+			if (Drivers.get(i).getTripSheetID() < 0) {
+				counter++;
+				if (counter == Item) {
+					selectedDriver = Drivers.get(i);
+					i = Drivers.size();
+				}
+			}
+		}
+		return selectedDriver;
+	}
+	public BusDTO getBusSelection() {
+		int Item = busSelectBox.getSelectedIndex();
+		int counter = 0;
+		BusDTO selectedBus = new BusDTO();
+		for (int i = 0;  i < Busses.size(); i++) {
+			if (Busses.get(i).getTripSheetID() < 0) {
+				counter++;
+				if (counter == Item) {
+					selectedBus = Busses.get(i);
+					i = Busses.size();
+				}
+			}
+		}
+		return selectedBus;
 	}
 	
 }

@@ -15,20 +15,20 @@
 				<g:at left="10" top="55">
 					<g:Label text="Trip Name:"/>
 				</g:at>
-				<g:at left="72" top="55">
+				<g:at left="92" top="55">
 					<g:TextBox width="348px" height="6px" ui:field="tripNameField"/>
 				</g:at>
 				<g:at left="10" top="79">
 					<g:Label text="Select Driver:"/>
 				</g:at>
-				<g:at left="72" top="79">
-					<g:ListBox width="100px" height="6px" ui:field="driverSelectBox"/>
+				<g:at left="92" top="79">
+					<g:ListBox width="150px" height="18px" ui:field="driverSelectBox"/>
 				</g:at>
 				<g:at left="10" top="103">
 					<g:Label text="Select Bus:"/>
 				</g:at>
-				<g:at left="72" top="103">
-					<g:ListBox width="100px" height="6px" ui:field="busSelectBox"/>
+				<g:at left="92" top="103">
+					<g:ListBox width="150px" height="18px" ui:field="busSelectBox"/>
 				</g:at>
 				
 				

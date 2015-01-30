@@ -19,6 +19,7 @@ public class CreateTable {
 	public static void main(String[] args) {
 		doReset();
 		createAdmin("2andrewp2@gmail.com", "Andrew", "Ghosty678");
+		createAdmin("diteremail@email.com", "Dieter", "Dieter4");
 		System.out.println("Completed");
 	}
 	public static void doReset(){

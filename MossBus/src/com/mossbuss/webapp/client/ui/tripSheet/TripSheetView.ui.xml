@@ -1,3 +1,27 @@
+<!-- <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent"> -->
+<!-- <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" -->
+<!-- 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:p1="urn:import:com.mossbuss.webapp.client.ui.print"> -->
+<!-- 	<ui:style> -->
+	
+<!-- 	</ui:style> -->
+<!-- 	<g:HTMLPanel> -->
+<!-- 	    <g:TabPanel width="451px" height="299px" styleName="gwt-DialogBox" ui:field="tPanel"> -->
+<!-- 			<g:Tab text="Customer Details"> -->
+<!-- 				<g:at left="10" top="30"> -->
+<!-- 					<p1:QuoteGrid ui:field="studentsGrid"/> -->
+<!-- 				</g:at> -->
+<!-- 				<g:at left ="80" top="10"> -->
+<!-- 				    <g:Button styleName="generalButton" text="Close" ui:field="closeButton"/> -->
+<!-- 				</g:at> -->
+<!-- 				<g:at left="10" top="424"> -->
+<!-- 					<g:Label width="619px" height="18px" ui:field="errorLabel" styleName="serverResponseLabelError"/> -->
+<!-- 				</g:at> -->
+<!-- 			</g:Tab> -->
+			
+<!-- 		</g:TabPanel> -->
+<!-- 	</g:HTMLPanel> -->
+<!-- </ui:UiBinder>  -->
+
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:p1="urn:import:com.mossbuss.webapp.client.ui.print">
@@ -5,11 +29,93 @@
 	
 	</ui:style>
 	<g:HTMLPanel>
-			<g:at left="10" top="10">
-				<p1:QuoteGrid ui:field="studentsGrid" width="425px" height="600px"/>
-			</g:at>
-			<g:at left="10" top="424">
-				<g:Label width="619px" height="18px" ui:field="errorLabel" styleName="serverResponseLabelError"/>
-			</g:at>
+		<g:TabPanel width="451px" height="299px" styleName="gwt-DialogBox" ui:field="tPanel">
+			<g:Tab text="Customer Details">
+				<g:AbsolutePanel width="445px" height="257px">
+<!-- 				<g:at left="10" top="10"> -->
+<!-- 					<g:Label text="Student View" width="360px" height="18px" horizontalAlignment="ALIGN_CENTER" styleName="headingText"/> -->
+<!-- 				</g:at> -->
+<!-- 				<g:at left="10" top="55"> -->
+<!-- 					<g:Label text="Customer :"/> -->
+<!-- 				</g:at> -->
+<!-- 				<g:at left="118" top="55"> -->
+<!-- 					<g:Label width="312px" height="18px" ui:field="studentName"/> -->
+<!-- 				</g:at> -->
+<!-- 				<g:at left="10" top="79"> -->
+<!-- 					<g:Label text="Parent :"/> -->
+<!-- 				</g:at> -->
+<!-- 				<g:at left="136" top="79"> -->
+<!-- 					<g:Label width="294px" height="18px" ui:field="parentName"/> -->
+<!-- 				</g:at> -->
+<!-- 				<g:at left="10" top="103"> -->
+<!-- 					<g:Label text="Phone :"/> -->
+<!-- 				</g:at> -->
+<!-- 				<g:at left="61" top="103"> -->
+<!-- 					<g:Label width="127px" height="18px" ui:field="phoneNumber"/> -->
+<!-- 				</g:at> -->
+				
+				<g:at left="10" top="116">
+				<p1:QuoteGrid ui:field="studentsGrid"/>
+				</g:at>
+				<g:at left ="80" top="10">
+				    <g:Button styleName="generalButton" text="Close" ui:field="closeButton"/>
+				</g:at>
+				<g:at left="10" top="424">
+					<g:Label width="619px" height="18px" ui:field="errorLabel" styleName="serverResponseLabelError"/>
+				</g:at>
+				
+<!-- 				<g:at left="194" top="127"> -->
+<!-- 					<g:Label text="Cell :"/> -->
+<!-- 				</g:at> -->
+<!-- 				<g:at left="310" top="127"> -->
+<!-- 					<g:Label width="120px" height="18px" ui:field="cellNumber"/> -->
+<!-- 				</g:at> -->
+<!-- 				<g:at left="10" top="151"> -->
+<!-- 					<g:Label text="Email :"/> -->
+<!-- 				</g:at> -->
+<!-- 				<g:at left="118" top="151"> -->
+<!-- 					<g:Label width="312px" height="18px" ui:field="emailAddress"/> -->
+<!-- 				</g:at> -->
+				
+<!-- 				<g:at left="230" top="103"> -->
+<!-- 					<g:Label text="Address :"/> -->
+<!-- 				</g:at> -->
+<!-- 				<g:at left="118" top="151"> -->
+<!-- 					<g:Label width="312px" height="18px" ui:field="Address"/> -->
+<!-- 				</g:at> -->
+				
+<!-- 				<g:at left="335" top="206"> -->
+<!-- 					<g:Button styleName="generalButton" text="Next" ui:field="nextButton"/> -->
+<!-- 				</g:at> -->
+			</g:AbsolutePanel>
+			</g:Tab>
+			<g:Tab text="Invoice Address">
+			<g:AbsolutePanel width="445px" height="257px">
+<!-- 				<g:at left="10" top="10"> -->
+<!-- 					<p1:AddressView ui:field="invoiceAddress" width="425px" height="190px"/> -->
+<!-- 				</g:at> -->
+<!-- 				<g:at left="335" top="206"> -->
+<!-- 					<g:Button styleName="generalButton" text="Next" ui:field="nextButton1"/> -->
+<!-- 				</g:at> -->
+<!-- 				<g:at left="10" top="206"> -->
+<!-- 					<g:Button ui:field="backButton" styleName="generalButton" text="Back"/> -->
+<!-- 				</g:at> -->
+			</g:AbsolutePanel>
+			</g:Tab>
+			<g:Tab text="Delivery Address">
+				<g:AbsolutePanel width="445px" height="257px">
+<!-- 					<g:at left="10" top="10"> -->
+<!-- 						<p1:AddressView ui:field="deliveryAddress" width="425px" height="190px"/> -->
+<!-- 					</g:at> -->
+<!-- 					<g:at left="326" top="206"> -->
+<!-- 						<g:Button styleName="generalButton" text="Close" ui:field="closeButton"/> -->
+<!-- 					</g:at> -->
+<!-- 					<g:at left="10" top="206"> -->
+<!-- 						<g:Button styleName="generalButton" text="Back" ui:field="backButton1"/> -->
+<!-- 					</g:at> -->
+				</g:AbsolutePanel>
+			</g:Tab>
+			
+		</g:TabPanel>
 	</g:HTMLPanel>
 </ui:UiBinder> 

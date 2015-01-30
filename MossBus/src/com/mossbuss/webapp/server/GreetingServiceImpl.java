@@ -279,16 +279,18 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements
 				Statement stmt = null;
 				Connection conn = null;
 				ResultSet rs = null;
-				ResultSet srs = null;
+				System.out.println("111111");
 				try {
 					synchronized (serverDataSource) {
 						conn = serverDataSource.getConnection();
+						System.out.println("22222222");
 					}
-					String sql = "select * from driver";
+					String sql = "select id from driver";
 					stmt = conn.createStatement();
 					rs = stmt.executeQuery(sql);
-				
+					System.out.println("33333333");
 					while(rs.next()) {			
+						System.out.println("WHILE WHILE WHILE WHILE WHILE WHILE");
 						driverlist.add(getDriver(rs.getInt("id")));
 					}
 					
@@ -298,14 +300,17 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements
 //					}
 				
 				} finally {
+					System.out.println("44444444");
 					if (rs != null) {
 						try { rs.close(); } catch(SQLException ex) {}
 						rs=null;
 					}
+					System.out.println("55555555");
 					if (stmt != null) {
 						try { stmt.close(); } catch(SQLException ex) {}
 						stmt = null;
 					}
+					System.out.println("66666666");
 					if (conn != null) {
 						try { conn.close(); } catch(SQLException ex) {}
 						conn = null;
@@ -326,7 +331,7 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements
 					synchronized (serverDataSource) {
 						conn = serverDataSource.getConnection();
 					}
-					String sql = "select * from driver";
+					String sql = "select id from bus";
 					stmt = conn.createStatement();
 					rs = stmt.executeQuery(sql);
 				
@@ -361,7 +366,7 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements
 		Session session= null;
 		try{
 			AnnotationConfiguration config = new AnnotationConfiguration();
-			config.addAnnotatedClass(Student.class);
+			config.addAnnotatedClass(Driver.class);
 			config.configure();
 			SessionFactory factory = config.buildSessionFactory();
 			session = factory.getCurrentSession();

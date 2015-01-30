@@ -14,8 +14,11 @@ import com.mossbuss.webapp.client.GreetingServiceAsync;
 import com.mossbuss.webapp.client.dto.ClientDTO;
 import com.mossbuss.webapp.client.dto.DriverDTO;
 import com.mossbuss.webapp.client.dto.StudentDTO;
+import com.mossbuss.webapp.client.dto.TripSheetDTO;
 import com.mossbuss.webapp.client.ui.students.studentEdit;
 import com.mossbuss.webapp.client.ui.students.studentSearch;
+import com.mossbuss.webapp.client.ui.tripSheet.TripSheetEdit;
+import com.mossbuss.webapp.client.ui.tripSheet.TripSheetSearch;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class Dash extends Composite {
@@ -121,10 +124,58 @@ public class Dash extends Composite {
 		});
 		
 		navMenu.tripSheetMenu.addClickHandler(new ClickHandler() {
-			//the view for the students... StudentEdit is where students
-			// will be added.
+			
 			@Override
 			public void onClick(ClickEvent event) {
+				final TripSheetSearch tripSheetSearch = new TripSheetSearch();
+				tripSheetSearch.getCancelButton().setVisible(false);
+				tripSheetSearch.getSelectButton().setText("Edit");
+				tripSheetSearch.getSelectButton().addClickHandler(new ClickHandler() {
+					@Override
+					public void onClick(ClickEvent event) {
+						//customerSearch.setVisible(false);
+						final TripSheetEdit tripSheetEdit = new TripSheetEdit();
+						tripSheetEdit.setTripSheet(tripSheetSearch.getTripSheet());
+						final PopupPanel pPanel = new PopupPanel();
+						tripSheetEdit.getCancelButton().addClickHandler(new ClickHandler() {
+							@Override
+							public void onClick(ClickEvent event) {
+								pPanel.hide();
+								//customerSearch.setVisible(true);
+							}
+						});
+						
+						tripSheetEdit.getSaveButton().addClickHandler(new ClickHandler() {
+							@Override
+							public void onClick(ClickEvent event) {
+								greetingService.saveTripSheet(tripSheetEdit.getTripSheet(), new AsyncCallback<TripSheetDTO>() {
+
+									@Override
+									public void onFailure(Throwable caught) {
+										// TODO Fix This:
+										//errorLabel.setText(caught.getMessage());
+									}
+
+									@Override
+									public void onSuccess(TripSheetDTO result) {
+										tripSheetSearch.setTripSheet(result);
+									}
+								});
+								pPanel.hide();
+								//customerSearch.setVisible(true);
+							}
+						});
+						
+						pPanel.add(tripSheetEdit);
+						pPanel.setModal(true);
+						pPanel.center();
+						
+					}
+				});
+				dataPanel.clear();
+				dataPanel.add(tripSheetSearch);
+	
+				
 //				studentEdit studentView = new studentEdit();
 //				dataPanel.clear();
 //				dataPanel.add(studentView);
