@@ -94,6 +94,7 @@ public class Student {
 		student.setParentID(this.getParentID());
 		student.setParentName(this.getParentName());
 		student.setTripSheetID(this.getTripSheetID());
+		student.setAddress(this.getAddress());
 		return student;
 	}
 
@@ -105,5 +106,6 @@ public class Student {
 		this.setParentID(student.getParentID());
 		this.setParentName(student.getParentName());
 		this.setTripSheetID(student.getTripSheetID());
+		this.setAddress(student.getAddress());
 	}
 }

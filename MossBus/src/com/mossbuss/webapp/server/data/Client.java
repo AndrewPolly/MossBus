@@ -94,6 +94,7 @@ public class Client {
 		client.setEmailAddress(this.getEmailAddress());
 		client.setParentName(this.getParentName());
 		client.setCellNumber(this.getCellNumber());
+		client.setAddress(this.getAddress());
 		return client;
 	}
 
@@ -105,5 +106,6 @@ public class Client {
 		this.setEmailAddress(client.getEmailAddress());
 		this.setParentName(client.getParentName());
 		this.setCellNumber(client.getCellNumber());
+		this.setAddress(client.getAddress());
 	}
 }

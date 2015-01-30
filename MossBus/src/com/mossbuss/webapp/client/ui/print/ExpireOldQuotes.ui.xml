@@ -1,0 +1,20 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:p1="urn:import:com.skyrat.w8.client.ui.general.Panels">
+	<ui:style>
+	.important {
+		font-weight: bold;
+	}
+	</ui:style>
+	<g:HTMLPanel width="800px" height="600px">
+		<g:VerticalPanel horizontalAlignment="ALIGN_CENTER">
+			<g:HorizontalPanel spacing="5">
+				<g:Label text="Sales Person:" width="" height=""/>
+				<g:Label text="New Label" ui:field="spLabel" width="" height=""/>
+			</g:HorizontalPanel>
+			<g:Label text="Select Cutoff Date:" width="" height=""/>
+			<p1:DatePickerWithYearSelector ui:field="expireDate"/>
+			<g:Button ui:field="button">Expire</g:Button>
+		</g:VerticalPanel>
+	</g:HTMLPanel>
+</ui:UiBinder> 

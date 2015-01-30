@@ -31,7 +31,7 @@ public interface GreetingService extends RemoteService {
 	
 	StudentDTO getStudent(int selectedID) throws Exception;
 	ClientDTO getClient(int selectedID) throws Exception;
-	
+	TripSheetDTO getTripSheet(int selectedID) throws Exception;
 
 	
 	//Admin
@@ -44,5 +44,10 @@ public interface GreetingService extends RemoteService {
 		
 		//Sales
 		TripSheetDTO saveTripSheet(TripSheetDTO orderDetails) throws Exception;
-		
+		ArrayList<StudentDTO> getStudentsFromParent(int selectedParentID)
+				throws Exception;
+		ArrayList<StudentDTO> getStudentsFromTripSheet(int selectedTripSheetID)
+				throws Exception;
+		ArrayList<DriverDTO> getAllDrivers() throws Exception;
+		ArrayList<BusDTO> getAllBusses() throws Exception;
 }

@@ -1,0 +1,84 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:p1="urn:import:com.skyrat.w8.client.ui.stock">
+	<ui:style>
+		
+	</ui:style>
+	<g:HTMLPanel width="600px" height="300px">
+		<g:VerticalPanel width="585px" height="">
+			<g:HorizontalPanel spacing="5" verticalAlignment="ALIGN_MIDDLE">
+				<g:Label text="Allocation ID:"/>
+				<g:Label text="N/A" ui:field="allocationIDLbl" styleName="generalText" width="120px" height=""/>
+				<g:Label text="Required:"/>
+				<g:Label text="Loading..." styleName="generalText" width="63px" height="" ui:field="QTY"/>
+				<g:Label text="Confirmed:"/>
+				<g:Label text="Loading..." styleName="generalText" width="63px" height="" ui:field="confirmed"/>
+				<g:Button ui:field="fixButton" text="Fix" styleName="smallButton" width="32px" height="18px"/>
+				<g:Button styleName="closeButton" ui:field="cancelButton"/>
+			</g:HorizontalPanel>
+			<p1:StockLevels width="576px" height="62px" ui:field="stockLevels"/>
+			<g:HorizontalPanel>
+				<g:Label text="Description:"/>
+				<g:ScrollPanel width="502px" height="49px">
+					<g:Label text="Loading..." width="100%" height="100%" styleName="generalText" ui:field="itemDescription"/>
+				</g:ScrollPanel>
+			</g:HorizontalPanel>
+			<g:AbsolutePanel width="577px" height="142px" ui:field="allocationsPannel" visible="false">
+					<g:at left="541" top="98">
+						<g:Button styleName="okButton" ui:field="allocateButton"/>
+					</g:at>
+					<g:at left="509" top="98">
+						<g:Button styleName="editButton" text="">Change</g:Button>
+					</g:at>
+					<g:at left="56" top="104">
+						<g:CheckBox text="This is not a physical Item (eg Labour, Travel etc)" ui:field="nullStockItem"/>
+					</g:at>
+					<g:at left="72" top="74">
+						<g:Label text="Order"/>
+					</g:at>
+					<g:at left="110" top="68">
+						<g:TextBox width="53px" height="18px" styleName="generalText" ui:field="QTYO"/>
+					</g:at>
+					<g:at left="56" top="42">
+						<g:Label text="Transfer"/>
+					</g:at>
+					<g:at left="110" top="36">
+						<g:TextBox width="53px" height="18px" styleName="generalText" ui:field="QTYT"/>
+					</g:at>
+					<g:at left="173" top="74">
+						<g:Label text="From"/>
+					</g:at>
+					<g:at left="209" top="74">
+						<g:Label text="Loading..." ui:field="itemSupplier" styleName="generalText" width="356px" height="18px"/>
+					</g:at>
+					<g:at left="173" top="42">
+						<g:Label text="From"/>
+					</g:at>
+					<g:at left="209" top="42">
+						<g:ListBox width="154px" height="18px" styleName="generalText" ui:field="fromBranch"/>
+					</g:at>
+					<g:at left="56" top="12">
+						<g:Label text="Reserve"/>
+					</g:at>
+					<g:at left="110" top="6">
+						<g:TextBox width="53px" height="18px" styleName="generalText" ui:field="QTYR"/>
+					</g:at>
+					<g:at left="186" top="15">
+						<g:Label text="At:"/>
+					</g:at>
+					<g:at left="209" top="15">
+						<g:Label text="Loading..." ui:field="destinationBranch" styleName="generalText" width="358px" height="18px"/>
+					</g:at>
+					<g:at left="10" top="12">
+						<g:Label text="0" width="26px" height="18px" ui:field="labelRS"/>
+					</g:at>
+					<g:at left="10" top="42">
+						<g:Label width="26px" height="18px" text="0" ui:field="labelTR"/>
+					</g:at>
+					<g:at left="10" top="74">
+						<g:Label width="26px" height="18px" text="0" ui:field="labelO"/>
+					</g:at>
+				</g:AbsolutePanel>
+		</g:VerticalPanel>
+	</g:HTMLPanel>
+</ui:UiBinder> 

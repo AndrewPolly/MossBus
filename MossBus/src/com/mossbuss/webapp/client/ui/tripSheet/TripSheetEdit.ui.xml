@@ -1,0 +1,56 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:p1="com.google.gwt.user.client.ui.ListBox" >
+	<ui:style>
+	
+	</ui:style>
+	<g:HTMLPanel>
+		<g:TabPanel width="451px" height="299px" styleName="gwt-DialogBox" ui:field="tPanel">
+			<g:Tab text="Trip Sheet Edit">
+				<g:AbsolutePanel width="451px" height="257px">
+				<g:at left="10" top="10">
+					<g:Label text="Trip Sheet Edit" width="371px" height="18px" horizontalAlignment="ALIGN_CENTER" styleName="headingText"/>
+				</g:at>
+				
+				<g:at left="10" top="55">
+					<g:Label text="Trip Name:"/>
+				</g:at>
+				<g:at left="72" top="55">
+					<g:TextBox width="348px" height="6px" ui:field="tripNameField"/>
+				</g:at>
+				<g:at left="10" top="79">
+					<g:Label text="Select Driver:"/>
+				</g:at>
+				<g:at left="72" top="79">
+					<g:ListBox width="100px" height="6px" ui:field="driverSelectBox"/>
+				</g:at>
+				<g:at left="10" top="103">
+					<g:Label text="Select Bus:"/>
+				</g:at>
+				<g:at left="72" top="103">
+					<g:ListBox width="100px" height="6px" ui:field="busSelectBox"/>
+				</g:at>
+				
+				
+				
+			
+				
+				<g:at left="10" top="206">
+					<g:Button styleName="generalButton" ui:field="cancelButton">Cancel</g:Button>
+				</g:at>
+				
+				<g:at left="196" top="179">
+					<g:Label width="234px" height="18px" ui:field="errorLabel" styleName="serverResponseLabelError"/>
+				</g:at>
+				<g:at left="341" top="206">
+					<g:Button width="125px" height="41px" ui:field="saveButton" styleName="generalButton" text="Save">Save</g:Button>
+				</g:at>
+			</g:AbsolutePanel>
+			</g:Tab>
+			
+			
+			
+			
+		</g:TabPanel>
+	</g:HTMLPanel>
+</ui:UiBinder> 

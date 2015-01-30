@@ -119,12 +119,12 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements
 	public StudentDTO saveStudent(StudentDTO studentDetails) throws Exception {
 		Student student = new Student();
 		student.setData(studentDetails);
-		
+		System.out.println("XXXXXXXXXXXDDDXXDDDX " + studentDetails.getStudentName());
 		//Save
 		Session session = null;
 		try{
 			AnnotationConfiguration config = new AnnotationConfiguration();
-			config.addAnnotatedClass(Client.class);
+			config.addAnnotatedClass(Student.class);
 			config.configure();
 			SessionFactory factory = config.buildSessionFactory();
 			session = factory.getCurrentSession();
@@ -170,7 +170,7 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements
 					rs = stmt.executeQuery(sql);
 				
 					while(rs.next()) {			
-						oracle.add(rs.getInt("id")+" :: "+rs.getString("ParentName")+ "; " +rs.getString("EmailAddress"));
+						oracle.add(rs.getInt("id")+" :: "+rs.getString("Address")+ "; " +rs.getString("StudentName"));
 					}
 					
 //					srs = stmt.executeQuery("select * from StudentName");
@@ -231,7 +231,203 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements
 		return customerDetails;
 		
 	}
+	@Override
+	public ArrayList<StudentDTO> getStudentsFromParent(int selectedParentID) throws Exception {
+		ArrayList<StudentDTO> studentlist = new ArrayList<StudentDTO>();
+		
+				Statement stmt = null;
+				Connection conn = null;
+				ResultSet rs = null;
+				ResultSet srs = null;
+				try {
+					synchronized (serverDataSource) {
+						conn = serverDataSource.getConnection();
+					}
+					String sql = "select id from student where ParentID Like '" + selectedParentID + "'";
+					stmt = conn.createStatement();
+					rs = stmt.executeQuery(sql);
+				
+					while(rs.next()) {			
+						studentlist.add(getStudent(rs.getInt("id")));
+					}
+					
+//					srs = stmt.executeQuery("select * from StudentName");
+//					while(srs.next()) {
+//						//System.out.println("" + srs.);
+//					}
+				
+				} finally {
+					if (rs != null) {
+						try { rs.close(); } catch(SQLException ex) {}
+						rs=null;
+					}
+					if (stmt != null) {
+						try { stmt.close(); } catch(SQLException ex) {}
+						stmt = null;
+					}
+					if (conn != null) {
+						try { conn.close(); } catch(SQLException ex) {}
+						conn = null;
+					}
+				}
+				return studentlist;
+	}
+	@Override
+	public ArrayList<DriverDTO> getAllDrivers() throws Exception {
+		ArrayList<DriverDTO> driverlist = new ArrayList<DriverDTO>();
+		
+				Statement stmt = null;
+				Connection conn = null;
+				ResultSet rs = null;
+				ResultSet srs = null;
+				try {
+					synchronized (serverDataSource) {
+						conn = serverDataSource.getConnection();
+					}
+					String sql = "select * from driver";
+					stmt = conn.createStatement();
+					rs = stmt.executeQuery(sql);
+				
+					while(rs.next()) {			
+						driverlist.add(getDriver(rs.getInt("id")));
+					}
+					
+//					srs = stmt.executeQuery("select * from StudentName");
+//					while(srs.next()) {
+//						//System.out.println("" + srs.);
+//					}
+				
+				} finally {
+					if (rs != null) {
+						try { rs.close(); } catch(SQLException ex) {}
+						rs=null;
+					}
+					if (stmt != null) {
+						try { stmt.close(); } catch(SQLException ex) {}
+						stmt = null;
+					}
+					if (conn != null) {
+						try { conn.close(); } catch(SQLException ex) {}
+						conn = null;
+					}
+				}
+				return driverlist;
+	}
+	
+	@Override
+	public ArrayList<BusDTO> getAllBusses() throws Exception {
+		ArrayList<BusDTO> buslist = new ArrayList<BusDTO>();
+		
+				Statement stmt = null;
+				Connection conn = null;
+				ResultSet rs = null;
+				ResultSet srs = null;
+				try {
+					synchronized (serverDataSource) {
+						conn = serverDataSource.getConnection();
+					}
+					String sql = "select * from driver";
+					stmt = conn.createStatement();
+					rs = stmt.executeQuery(sql);
+				
+					while(rs.next()) {			
+						buslist.add(getBus(rs.getInt("id")));
+					}
+					
+//					srs = stmt.executeQuery("select * from StudentName");
+//					while(srs.next()) {
+//						//System.out.println("" + srs.);
+//					}
+				
+				} finally {
+					if (rs != null) {
+						try { rs.close(); } catch(SQLException ex) {}
+						rs=null;
+					}
+					if (stmt != null) {
+						try { stmt.close(); } catch(SQLException ex) {}
+						stmt = null;
+					}
+					if (conn != null) {
+						try { conn.close(); } catch(SQLException ex) {}
+						conn = null;
+					}
+				}
+				return buslist;
+	}
+	
+	private DriverDTO getDriver(int selectedID) throws Exception {
+		Driver details = new Driver();
+		Session session= null;
+		try{
+			AnnotationConfiguration config = new AnnotationConfiguration();
+			config.addAnnotatedClass(Student.class);
+			config.configure();
+			SessionFactory factory = config.buildSessionFactory();
+			session = factory.getCurrentSession();
+			session.beginTransaction();
+			session.load(details, selectedID);
+			session.getTransaction().commit();	
+		}
+		catch (Exception e){
+			System.out.println("Error: " + e.getMessage());
+			throw new Exception(e.getMessage());
+			
+		}
+		finally{
+			if(session != null && session.isOpen()){
+				session.close();
+			}
+		}
+		DriverDTO customerDetails = details.getData();
+		
+		return customerDetails;
 
+	}
+
+
+
+	@Override
+	public ArrayList<StudentDTO> getStudentsFromTripSheet(int selectedTripSheetID) throws Exception {
+		ArrayList<StudentDTO> studentlist = new ArrayList<StudentDTO>();
+		
+				Statement stmt = null;
+				Connection conn = null;
+				ResultSet rs = null;
+				ResultSet srs = null;
+				try {
+					synchronized (serverDataSource) {
+						conn = serverDataSource.getConnection();
+					}
+					String sql = "select id from student where TripSheetID Like '" + selectedTripSheetID + "'";
+					stmt = conn.createStatement();
+					rs = stmt.executeQuery(sql);
+				
+					while(rs.next()) {			
+						studentlist.add(getStudent(rs.getInt("id")));
+					}
+					
+//					srs = stmt.executeQuery("select * from StudentName");
+//					while(srs.next()) {
+//						//System.out.println("" + srs.);
+//					}
+				
+				} finally {
+					if (rs != null) {
+						try { rs.close(); } catch(SQLException ex) {}
+						rs=null;
+					}
+					if (stmt != null) {
+						try { stmt.close(); } catch(SQLException ex) {}
+						stmt = null;
+					}
+					if (conn != null) {
+						try { conn.close(); } catch(SQLException ex) {}
+						conn = null;
+					}
+				}
+				return studentlist;
+	}
 	@Override
 	public void saveDriver(DriverDTO driverDetails) throws Exception {
 		Driver driver = new Driver();
@@ -367,6 +563,38 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements
 			}
 		}
 		ClientDTO customerDetails = details.getData();
+		
+		return customerDetails;
+		
+	}
+
+
+
+	@Override
+	public TripSheetDTO getTripSheet(int selectedID) throws Exception {
+		TripSheet details = new TripSheet();
+		Session session = null;
+		try{
+			AnnotationConfiguration config = new AnnotationConfiguration();
+			config.addAnnotatedClass(Client.class);
+			config.configure();
+			SessionFactory factory = config.buildSessionFactory();
+			session = factory.getCurrentSession();
+			session.beginTransaction();
+			session.load(details, selectedID);
+			session.getTransaction().commit();	
+		}
+		catch (Exception e){
+			System.out.println("Error: " + e.getMessage());
+			throw new Exception(e.getMessage());
+			
+		}
+		finally{
+			if(session != null && session.isOpen()){
+				session.close();
+			}
+		}
+		TripSheetDTO customerDetails = details.getData();
 		
 		return customerDetails;
 		

@@ -71,8 +71,8 @@ public class Dash extends Composite {
 								//customerSearch.setVisible(true);
 							}
 						});
-						//TODO: THIS IS ALL FUCKED UP.
-						customerEdit.getNextButton().addClickHandler(new ClickHandler() {
+						
+						customerEdit.getSaveButton().addClickHandler(new ClickHandler() {
 							@Override
 							public void onClick(ClickEvent event) {
 								greetingService.saveClient(customerEdit.getClientDetails(), new AsyncCallback<ClientDTO>() {
@@ -88,27 +88,6 @@ public class Dash extends Composite {
 										studentSearch.setCustomer(result);
 									}
 								});
-								//pPanel.hide();
-								//customerSearch.setVisible(true);
-								customerEdit.selectTpanel(1);
-							}
-						});
-						customerEdit.getSaveButton().addClickHandler(new ClickHandler() {
-							@Override
-							public void onClick(ClickEvent event) {
-//								greetingService.saveClient(customerEdit.getClientDetails(), new AsyncCallback<ClientDTO>() {
-//
-//									@Override
-//									public void onFailure(Throwable caught) {
-//										// TODO Fix This:
-//										//errorLabel.setText(caught.getMessage());
-//									}
-//
-//									@Override
-//									public void onSuccess(ClientDTO result) {
-//										studentSearch.setCustomer(result);
-//									}
-//								});
 								pPanel.hide();
 								//customerSearch.setVisible(true);
 							}

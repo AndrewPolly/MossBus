@@ -27,7 +27,8 @@ public interface GreetingServiceAsync {
 		void getStudent(int selectedID, AsyncCallback<StudentDTO> asyncCallback);
 		void getClient(int selectedID, AsyncCallback<ClientDTO> asyncCallback);
 
-		
+		void getStudentsFromParent(int selectedParentID, AsyncCallback<ArrayList<StudentDTO>> asyncCallback);
+		void getStudentsFromTripSheet(int selectedParentID, AsyncCallback<ArrayList<StudentDTO>> asyncCallback);
 	//Admin
 		void saveDriver(DriverDTO userdetails, AsyncCallback<Void> asyncCallback);
 		void listDrivers(String string,AsyncCallback<ArrayList<DriverDTO>> asyncCallback);
@@ -41,8 +42,10 @@ public interface GreetingServiceAsync {
 		
 	//TripSheet
 		void saveTripSheet(TripSheetDTO tripSheet,AsyncCallback<TripSheetDTO> asyncCallback);
+		void getTripSheet(int selectedID, AsyncCallback<TripSheetDTO> asyncCallback);
 		
-		
+		void getAllDrivers(AsyncCallback<ArrayList<DriverDTO>> asyncCallback);
+		void getAllBusses(AsyncCallback<ArrayList<BusDTO>> asyncCallback);
 		
 	
 
