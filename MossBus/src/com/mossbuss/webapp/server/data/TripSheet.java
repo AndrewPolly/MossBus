@@ -20,7 +20,7 @@ public class TripSheet {
 	private int busID;
 	private String tripName;
 	private String driverName;
-	private ArrayList<Integer> studentsID = new ArrayList<Integer>();
+	
 	
 	public TripSheet() {
 		
@@ -58,16 +58,7 @@ public class TripSheet {
 		driverName = DriverName;
 	}
 	
-	@Column(name="StudentsID")
-	public ArrayList<Integer> getStudentsID() {
-		return studentsID;
-	}
-	public void setStudentsID(ArrayList<Integer> StudentsID) {
-		studentsID = StudentsID;
-	}
-	public void addStudentID(int StudentID) {
-		studentsID.add(StudentID);
-	}
+
 	@Id
 	@GeneratedValue
 	@Column(name="id")
@@ -86,7 +77,6 @@ public class TripSheet {
 		TripSheet.setBusID(this.getBusID());
 		TripSheet.setTripName(this.getTripName());
 		TripSheet.setDriverName(this.getDriverName());
-		TripSheet.setStudentsID(this.getStudentsID());
 		return TripSheet;
 	}
 	
@@ -97,7 +87,6 @@ public class TripSheet {
 		this.setBusID(TripSheet.getBusID());
 		this.setTripName(TripSheet.getTripName());
 		this.setDriverName(TripSheet.getDriverName());
-		this.setStudentsID(TripSheet.getStudentsID());
 	}
 	
 }

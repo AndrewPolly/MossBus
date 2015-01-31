@@ -66,7 +66,7 @@ public class TripSheetEdit extends Composite {
 	public ListBox getDriverSelectBox() {
 		return driverSelectBox;
 	}
-	public void init() {
+	public void driverInit() {
 		System.out.println("AT INIT DOING SOMETHING HERE XXXXXXXXXXXX");
 		greetingService.getAllDrivers(new AsyncCallback<ArrayList<DriverDTO>>() {
 
@@ -82,6 +82,7 @@ public class TripSheetEdit extends Composite {
 				Drivers = result;
 				System.out.println("DriverArray LIST SIZE IS : " + Drivers.size());
 				System.out.println("DriverArray LIS XXXX T SIZE IS : " + Drivers.size());
+				//check for drivers not yet allocated to trip sheet.
 				for (int i = 0;  i < Drivers.size(); i++) {
 					if (Drivers.get(i).getTripSheetID() < 0) {
 						driverSelectBox.addItem(Drivers.get(i).getName());
@@ -91,8 +92,13 @@ public class TripSheetEdit extends Composite {
 			}
 		});
 		
+		
+		
+	}
+	public void busInit() {
+		System.out.println("GOT INTO BUSINIT");
 		greetingService.getAllBusses(new AsyncCallback<ArrayList<BusDTO>>() {
-
+			
 			@Override
 			public void onFailure(Throwable caught) {
 				// TODO Fix This:
@@ -102,29 +108,37 @@ public class TripSheetEdit extends Composite {
 			@Override
 			public void onSuccess(ArrayList<BusDTO> busresult) {
 				Busses = busresult;
+				System.out.println("ONSUCCESS" + Busses.size());
+				//check for busses that havent yet been allocated.
+				for (int i = 0; i < Busses.size(); i++) {
+					System.out.println("IN FOR LOOP" + i);
+					if (Busses.get(i).getTripSheetID() < 0) {
+						busSelectBox.addItem(Busses.get(i).getBusName());
+						System.out.println("BUS AT ID: " + i + " is: " + Busses.get(i).getBusName());
+					} else {
+						System.out.println("Else statement:" + Busses.get(0).getTripSheetID());
+					}
+				}
 			}
 		});
-		for (int i = 0; i < Busses.size(); i++) {
-			
-			if (Busses.get(i).getTripSheetID() < 0) {
-				busSelectBox.addItem(Busses.get(i).getBusName());
-				System.out.println("BUS AT ID: " + i + " is: " + Busses.get(i).getBusName());
-			}
-		}
 		
 	}
 	public TripSheetDTO getTripSheet() {
 		TripSheetDTO trip = new TripSheetDTO();
 		trip.setTripName(tripNameField.getText());
 		trip.setDriverID(getDriverSelection().getID());
+		System.out.println("Driver id is : " + getDriverSelection().getID());
 		trip.setBusID(getBusSelection().getID());
+		System.out.println("Bus id is : " + getBusSelection().getID());
 		trip.setDriverName(getDriverSelection().getName());
+		System.out.println("Driver name is : " + getDriverSelection().getName());
 		return trip;
 	}
 	public void setTripSheet(TripSheetDTO tripSheet) {
 		this.tripDetails = tripSheet;
 		tripNameField.setText(tripDetails.getTripName());
-		init();
+		driverInit();
+		busInit();
 		driverSelectBox.setItemSelected(getDriverIntSelection(), true);
 		busSelectBox.setItemSelected(getBusIntSelection(), true);
 	}
@@ -132,6 +146,7 @@ public class TripSheetEdit extends Composite {
 	public void selectTpanel(int selector) {
 		tPanel.selectTab(selector);
 	}
+	
 	public int getDriverIntSelection() {
 		int Item = driverSelectBox.getSelectedIndex();
 		int counter = 0;
@@ -153,10 +168,11 @@ public class TripSheetEdit extends Composite {
 		
 		for (int i = 0;  i < Busses.size(); i++) {
 			if (Busses.get(i).getTripSheetID() < 0) {
-				counter++;
+				
 				if (counter == Item) {
 					return counter;
 				}
+				counter++;
 			}
 		}
 		//this should never happen;
@@ -166,13 +182,16 @@ public class TripSheetEdit extends Composite {
 		int Item = driverSelectBox.getSelectedIndex();
 		int counter = 0;
 		DriverDTO selectedDriver = new DriverDTO();
+		
 		for (int i = 0;  i < Drivers.size(); i++) {
+			
 			if (Drivers.get(i).getTripSheetID() < 0) {
-				counter++;
+				
 				if (counter == Item) {
 					selectedDriver = Drivers.get(i);
 					i = Drivers.size();
 				}
+				counter++;
 			}
 		}
 		return selectedDriver;
@@ -183,11 +202,11 @@ public class TripSheetEdit extends Composite {
 		BusDTO selectedBus = new BusDTO();
 		for (int i = 0;  i < Busses.size(); i++) {
 			if (Busses.get(i).getTripSheetID() < 0) {
-				counter++;
 				if (counter == Item) {
 					selectedBus = Busses.get(i);
 					i = Busses.size();
 				}
+				counter++;
 			}
 		}
 		return selectedBus;

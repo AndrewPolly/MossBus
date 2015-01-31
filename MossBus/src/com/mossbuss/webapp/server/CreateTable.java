@@ -20,6 +20,7 @@ public class CreateTable {
 		doReset();
 		createAdmin("2andrewp2@gmail.com", "Andrew", "Ghosty678");
 		createAdmin("diteremail@email.com", "Dieter", "Dieter4");
+		createBus("Bus1");
 		System.out.println("Completed");
 	}
 	public static void doReset(){
@@ -39,7 +40,35 @@ public class CreateTable {
 		config.configure();
 		new SchemaExport(config).create(true, true);
 	}
-	
+	public static void createBus(String BusName) {
+		Bus newBus = new Bus();
+		newBus.setBusName(BusName);
+		newBus.setDriverID(-1);
+		newBus.setTripSheetID(-1);
+		
+		Session session = null;
+		try{
+			AnnotationConfiguration config = new AnnotationConfiguration();
+			config.addAnnotatedClass(Bus.class);
+			config.configure();
+			SessionFactory factory = config.buildSessionFactory();
+			session = factory.getCurrentSession();
+			session.beginTransaction();
+			session.save(newBus);
+			session.getTransaction().commit();
+		}
+		catch(Exception e){
+			System.out.println(e.getMessage() + e.getCause());
+		}
+		finally{
+			if(session != null && session.isOpen()){
+				if(session != null && session.isOpen()){
+					session.close();
+				}
+			}
+		}
+		
+	}
 	public static void createAdmin(String EmailAddress, String UserName, String Password){
 		Driver admin = new Driver();
 		admin.setAdmin(true);

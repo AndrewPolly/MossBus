@@ -46,7 +46,7 @@ public interface GreetingServiceAsync {
 		
 		void getAllDrivers(AsyncCallback<ArrayList<DriverDTO>> asyncCallback);
 		void getAllBusses(AsyncCallback<ArrayList<BusDTO>> asyncCallback);
-		
+		void updateDBtripSheetSelected(int tripSheetID, AsyncCallback<Void> asyncCallback);
 	
 
 }

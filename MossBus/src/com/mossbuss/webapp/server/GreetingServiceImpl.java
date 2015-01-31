@@ -85,7 +85,7 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements
 			SessionFactory factory = config.buildSessionFactory();
 			session = factory.getCurrentSession();
 			session.beginTransaction();
-			String hql = "from Driver where EmailAddress = '"+ driverDTO.getEmailAddress() +"' AND Password = '"+driverDTO.getPassword()+"'";
+			String hql = "from Driver where EmailAddress = '" + driverDTO.getEmailAddress() +"' AND Password = '"+driverDTO.getPassword()+"'";
 			
 			Query query = session.createQuery(hql);
 			List userList = query.list();
@@ -435,14 +435,15 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements
 	}
 	@Override
 	public void saveDriver(DriverDTO driverDetails) throws Exception {
+		System.out.println("Also Gets here!!!!");
 		Driver driver = new Driver();
 		driver.setData(driverDetails);
-		
+
 		//Save
 		Session session = null;
 		try{
 			AnnotationConfiguration config = new AnnotationConfiguration();
-			config.addAnnotatedClass(Client.class);
+			config.addAnnotatedClass(Driver.class);
 			config.configure();
 			SessionFactory factory = config.buildSessionFactory();
 			session = factory.getCurrentSession();
@@ -475,17 +476,92 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	@Override
+	public void updateDBtripSheetSelected(int tripSheetID) throws Exception {
+		TripSheetDTO tripSheet = new TripSheetDTO();
+		BusDTO bus = new BusDTO();
+		DriverDTO driver = new DriverDTO();
+		
+		tripSheet = getTripSheet(tripSheetID);
+		System.out.println("SDSSDSDSDSDSDSDS");
+		if (tripSheet.getBusID() > 0) { 
+			System.out.println("DDDDDDDDDDDDDDDDDD");
+			bus = getBus(tripSheet.getBusID());
+			bus.setTripSheetID(tripSheetID);
+			saveBus(bus);
+			System.out.println("EEEEEEEEEEEEEEEEE");
+		}
+		if (tripSheet.getDriverID() > 0) {
+			System.out.println("FFFFFFFFFFFFFFFF driver ID : " + tripSheet.getDriverID());
+			driver = getDriver(tripSheet.getDriverID());
+			System.out.println("okay well driverName is : " + driver.getName());
+			driver.setTripSheetID(tripSheetID);
+			saveDriver(driver);
+			System.out.println("GGGGGGGGGGGGGGGGG");
+		}
+	}
 	@Override
 	public void saveBus(BusDTO item) throws Exception {
-		// TODO Auto-generated method stub
+		Bus newBus = new Bus();
+		newBus.setBusName(item.getBusName());
+		newBus.setDriverID(item.getDriverID());
+		newBus.setTripSheetID(item.getTripSheetID());
+		newBus.setID(item.getID());
+		Session session = null;
+		try{
+			AnnotationConfiguration config = new AnnotationConfiguration();
+			config.addAnnotatedClass(Bus.class);
+			config.configure();
+			SessionFactory factory = config.buildSessionFactory();
+			session = factory.getCurrentSession();
+			session.beginTransaction();
+			if(newBus.getID() > 0){
+				session.update(newBus);
+			} else {
+				session.save(newBus);
+			}
+			session.getTransaction().commit();
+		}
+		catch(Exception e){
+			System.out.println(e.getMessage() + e.getCause());
+		}
+		finally{
+			if(session != null && session.isOpen()){
+				if(session != null && session.isOpen()){
+					session.close();
+				}
+			}
+		}
 		
 	}
 
 	@Override
 	public BusDTO getBus(int selectedID) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		Bus bus = new Bus();
+		Session session = null;
+		try{
+			AnnotationConfiguration config = new AnnotationConfiguration();
+			config.addAnnotatedClass(Bus.class);
+			config.configure();
+			SessionFactory factory = config.buildSessionFactory();
+			session = factory.getCurrentSession();
+			session.beginTransaction();
+			session.load(bus, selectedID);
+			session.getTransaction().commit();	
+		}
+		catch (Exception e){
+			System.out.println("Error: " + e.getMessage());
+			throw new Exception(e.getMessage());
+			
+		}
+		finally{
+			if(session != null && session.isOpen()){
+				session.close();
+			}
+		}
+		BusDTO busDetails = bus.getData();
+		
+		return busDetails;
 	}
 
 	@Override
@@ -495,10 +571,41 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements
 	}
 
 	@Override
-	public TripSheetDTO saveTripSheet(TripSheetDTO orderDetails)
+	public TripSheetDTO saveTripSheet(TripSheetDTO tripDetails)
 			throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		TripSheet tripSheet = new TripSheet();
+		tripSheet.setData(tripDetails);
+		//Save
+		Session session = null;
+		try{
+			AnnotationConfiguration config = new AnnotationConfiguration();
+			config.addAnnotatedClass(TripSheet.class);
+			config.configure();
+			SessionFactory factory = config.buildSessionFactory();
+			session = factory.getCurrentSession();
+			session.beginTransaction();
+			if(tripSheet.getID() > 0){
+				session.update(tripSheet);
+			} else {
+				session.save(tripSheet);
+			}
+			session.getTransaction().commit();
+			
+		}
+		catch(Exception e){
+			throw new Exception(e.getMessage() + e.getCause());
+		}
+		finally{
+			if(session != null && session.isOpen()){
+				if(session != null && session.isOpen()){
+					session.close();
+				}
+			}
+		}
+		tripDetails = tripSheet.getData();
+		return tripDetails;
+		
+		//havent tested.
 	}
 
 
@@ -581,7 +688,7 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements
 		Session session = null;
 		try{
 			AnnotationConfiguration config = new AnnotationConfiguration();
-			config.addAnnotatedClass(Client.class);
+			config.addAnnotatedClass(TripSheet.class);
 			config.configure();
 			SessionFactory factory = config.buildSessionFactory();
 			session = factory.getCurrentSession();
@@ -599,9 +706,9 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements
 				session.close();
 			}
 		}
-		TripSheetDTO customerDetails = details.getData();
+		TripSheetDTO tripDetails = details.getData();
 		
-		return customerDetails;
+		return tripDetails;
 		
 	}
 }

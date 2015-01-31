@@ -50,4 +50,5 @@ public interface GreetingService extends RemoteService {
 				throws Exception;
 		ArrayList<DriverDTO> getAllDrivers() throws Exception;
 		ArrayList<BusDTO> getAllBusses() throws Exception;
+		void updateDBtripSheetSelected(int tripSheetID) throws Exception;
 }

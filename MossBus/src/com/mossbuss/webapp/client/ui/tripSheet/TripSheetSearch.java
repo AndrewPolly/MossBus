@@ -84,7 +84,8 @@ public class TripSheetSearch extends Composite {
 	void onNewTripSheetButtonClick(ClickEvent event) {
 		final TripSheetEdit tripSheetEdit = new TripSheetEdit();
 		final PopupPanel pPanel = new PopupPanel();
-		tripSheetEdit.init();
+		tripSheetEdit.driverInit();
+		tripSheetEdit.busInit();
 		tripSheetEdit.getCancelButton().addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
@@ -95,6 +96,7 @@ public class TripSheetSearch extends Composite {
 			@Override
 			public void onClick(ClickEvent event) {
 				errorLabel.setText("");
+				TripSheet = tripSheetEdit.getTripSheet();
 				greetingService.saveTripSheet(TripSheet, new AsyncCallback<TripSheetDTO>() {
 
 					@Override
@@ -105,6 +107,18 @@ public class TripSheetSearch extends Composite {
 					@Override
 					public void onSuccess(TripSheetDTO result) {
 						setTripSheet(result);
+						//update DB so that driver and bus selected are now not available for allocating.
+						greetingService.updateDBtripSheetSelected(TripSheet.getID(), new AsyncCallback<Void>() {
+
+							@Override
+							public void onFailure(Throwable caught) {
+								errorLabel.setText(caught.getMessage());
+							}
+							@Override
+							public void onSuccess(Void x) {
+								
+							}
+						});
 					}
 				});
 				pPanel.hide();

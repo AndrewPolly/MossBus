@@ -12,7 +12,6 @@ public class TripSheetDTO implements Serializable {
 	private int busID;
 	private String tripName;
 	private String driverName;
-	private ArrayList<Integer> studentsID = new ArrayList<Integer>();
 	
 	public int getID() {
 		return id;
@@ -61,16 +60,5 @@ public class TripSheetDTO implements Serializable {
 //		this.students.add(studentName);
 //	}
 	
-	public ArrayList<Integer> getStudentsID() {
-		return studentsID;
-	}
-	
-	public void setStudentsID(ArrayList<Integer> StudentsID) {
-		studentsID = StudentsID;
-	}
-	
-	public void addStudentID(int studentID) {
-		this.studentsID.add(studentID);
-	}
 	
 }
