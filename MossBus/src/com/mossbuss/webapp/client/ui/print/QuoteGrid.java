@@ -106,7 +106,7 @@ public class QuoteGrid  extends FlexTable {
 	    
 		if(gridItems == null || gridItems.size() <= 0){
 			this.setText(1, 2, "There are no items to display.");
-			this.setText(1, 2, "");
+			//this.setText(1, 2, "");
 			return;
 		} else {
 			int rowIndex;

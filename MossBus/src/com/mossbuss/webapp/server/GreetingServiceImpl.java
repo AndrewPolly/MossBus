@@ -201,6 +201,54 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements
 		//yes.. without it you won't get suggestions
 		//okay awesome, i wanna get this and printing of trip sheets done by the end of today.. 
 	}
+	@Override
+	public ArrayList<String> updateTripSheetNameOracle(String sql)
+			throws Exception {
+		ArrayList<String> oracle = new ArrayList<String>();
+		//Do Lookup
+				Statement stmt = null;
+				Connection conn = null;
+				ResultSet rs = null;
+				ResultSet srs = null;
+				try {
+					synchronized (serverDataSource) {
+						conn = serverDataSource.getConnection();
+					}
+					stmt = conn.createStatement();
+					rs = stmt.executeQuery(sql);
+				
+					while(rs.next()) {			
+						oracle.add(rs.getInt("id")+" :: "+rs.getString("TripName")+ "; " +rs.getString("DriverName"));
+					}
+					
+//					srs = stmt.executeQuery("select * from StudentName");
+//					while(srs.next()) {
+//						//System.out.println("" + srs.);
+//					}
+				
+				} finally {
+					if (rs != null) {
+						try { rs.close(); } catch(SQLException ex) {}
+						rs=null;
+					}
+					if (stmt != null) {
+						try { stmt.close(); } catch(SQLException ex) {}
+						stmt = null;
+					}
+					if (conn != null) {
+						try { conn.close(); } catch(SQLException ex) {}
+						conn = null;
+					}
+				}
+		return oracle;
+		//??????? does nothing...
+				//ok it will work the same now..
+		//the connection is not using Hibernate which is why it needs a datasource file. 
+		//yeah what i mainly wanted to know is how to handle the DB calls "customer Like etc"
+		//must i still do this method? ofcourse im sure..
+		//yes.. without it you won't get suggestions
+		//okay awesome, i wanna get this and printing of trip sheets done by the end of today.. 
+	}
 
 	@Override
 	public StudentDTO getStudent(int selectedID) throws Exception {

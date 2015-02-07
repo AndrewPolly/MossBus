@@ -141,6 +141,7 @@ public class TripSheetEdit extends Composite {
 		busInit();
 		driverSelectBox.setItemSelected(getDriverIntSelection(), true);
 		busSelectBox.setItemSelected(getBusIntSelection(), true);
+		
 	}
 
 	public void selectTpanel(int selector) {

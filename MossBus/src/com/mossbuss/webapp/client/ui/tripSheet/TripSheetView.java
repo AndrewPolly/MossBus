@@ -6,6 +6,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Button;
@@ -30,6 +31,9 @@ public class TripSheetView extends Composite {
 	@UiField QuoteGrid studentsGrid;
 	@UiField Label errorLabel;
 	@UiField Button closeButton;
+	@UiField TripSheetEdit tripEdit;
+	@UiField Button addStudent;
+	@UiField ListBox studentSelectBox;
 	interface TripSheetViewUiBinder extends UiBinder<Widget, TripSheetView> {
 	}
 
@@ -63,7 +67,11 @@ public class TripSheetView extends Composite {
 		studentsGrid.drawGrid();
 	}
 	public Button getCloseButton() {
+		System.out.println("XXX GET CLOSEBUTTON IN TRIPSHEET VIEW GOT CALLED");
 		return closeButton;
+	}
+	public Button getAddStudentButton() {
+		return addStudent;
 	}
 
 

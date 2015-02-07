@@ -167,7 +167,7 @@ public class TripSheetSearch extends Composite {
 				   System.out.println(word);
 				   wordList.add(word);
 				}
-				String sql = "select id, DriverName, TripName from tripsheet where TripName Like '%" + wordList.get(0) + "%'";
+				String sql = "select id, TripName, DriverName from tripsheet where TripName Like '%" + wordList.get(0) + "%'";
 				
 				System.out.println(sql);
 				if(event.isAltKeyDown() || event.isControlKeyDown() || event.isDownArrow() || event.isLeftArrow() || event.isRightArrow() | event.isUpArrow()){
@@ -193,7 +193,7 @@ public class TripSheetSearch extends Composite {
 		}
 	}
 	public void updateContactNameOracle(String sql) throws Exception{
-		greetingService.updateContactNameOracle(sql, new AsyncCallback<ArrayList<String>>() {
+		greetingService.updateTripSheetNameOracle(sql, new AsyncCallback<ArrayList<String>>() {
 			public void onFailure(Throwable caught) {
 				Window.alert(caught.getMessage());
 			}

@@ -51,4 +51,6 @@ public interface GreetingService extends RemoteService {
 		ArrayList<DriverDTO> getAllDrivers() throws Exception;
 		ArrayList<BusDTO> getAllBusses() throws Exception;
 		void updateDBtripSheetSelected(int tripSheetID) throws Exception;
+		ArrayList<String> updateTripSheetNameOracle(String sql)
+				throws Exception;
 }

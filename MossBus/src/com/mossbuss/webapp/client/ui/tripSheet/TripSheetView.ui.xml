@@ -24,13 +24,13 @@
 
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
-	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:p1="urn:import:com.mossbuss.webapp.client.ui.print">
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:p1="urn:import:com.mossbuss.webapp.client.ui.print" xmlns:p2="urn:import:com.mossbuss.webapp.client.ui.tripSheet">
 	<ui:style>
 	
 	</ui:style>
 	<g:HTMLPanel>
 		<g:TabPanel width="451px" height="299px" styleName="gwt-DialogBox" ui:field="tPanel">
-			<g:Tab text="Customer Details">
+			<g:Tab text="View Trip Sheet">
 				<g:AbsolutePanel width="445px" height="257px">
 <!-- 				<g:at left="10" top="10"> -->
 <!-- 					<g:Label text="Student View" width="360px" height="18px" horizontalAlignment="ALIGN_CENTER" styleName="headingText"/> -->
@@ -54,11 +54,11 @@
 <!-- 					<g:Label width="127px" height="18px" ui:field="phoneNumber"/> -->
 <!-- 				</g:at> -->
 				
-				<g:at left="10" top="116">
+				<g:at left="10" top="10">
 				<p1:QuoteGrid ui:field="studentsGrid"/>
 				</g:at>
-				<g:at left ="80" top="10">
-				    <g:Button styleName="generalButton" text="Close" ui:field="closeButton"/>
+				<g:at left ="400" top="100">
+				    <g:Button styleName="generalButton" text="CLOSE" ui:field="closeButton"/>
 				</g:at>
 				<g:at left="10" top="424">
 					<g:Label width="619px" height="18px" ui:field="errorLabel" styleName="serverResponseLabelError"/>
@@ -89,7 +89,7 @@
 <!-- 				</g:at> -->
 			</g:AbsolutePanel>
 			</g:Tab>
-			<g:Tab text="Invoice Address">
+			<g:Tab text="Edit Trip Sheet">
 			<g:AbsolutePanel width="445px" height="257px">
 <!-- 				<g:at left="10" top="10"> -->
 <!-- 					<p1:AddressView ui:field="invoiceAddress" width="425px" height="190px"/> -->
@@ -100,10 +100,19 @@
 <!-- 				<g:at left="10" top="206"> -->
 <!-- 					<g:Button ui:field="backButton" styleName="generalButton" text="Back"/> -->
 <!-- 				</g:at> -->
+					<g:at left="0" top="0">
+					    <p2:TripSheetEdit ui:field="tripEdit" width = "425px" height="190px"/>
+					</g:at>
 			</g:AbsolutePanel>
 			</g:Tab>
-			<g:Tab text="Delivery Address">
+			<g:Tab text="Add Students">
 				<g:AbsolutePanel width="445px" height="257px">
+				    	<g:at left="30" top="30">
+							<g:ListBox width="150px" height="18px" ui:field="studentSelectBox"/>
+						</g:at>
+						<g:at left="190" top="30">
+						    <g:Button ui:field="addStudent" styleName="generalButton" text="Add"/>
+						</g:at>
 <!-- 					<g:at left="10" top="10"> -->
 <!-- 						<p1:AddressView ui:field="deliveryAddress" width="425px" height="190px"/> -->
 <!-- 					</g:at> -->

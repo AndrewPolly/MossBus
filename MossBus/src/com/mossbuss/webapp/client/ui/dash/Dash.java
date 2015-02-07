@@ -174,7 +174,7 @@ public class Dash extends Composite {
 				});
 				dataPanel.clear();
 				dataPanel.add(tripSheetSearch);
-	
+				
 				
 //				studentEdit studentView = new studentEdit();
 //				dataPanel.clear();

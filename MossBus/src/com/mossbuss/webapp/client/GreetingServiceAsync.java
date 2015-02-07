@@ -39,7 +39,8 @@ public interface GreetingServiceAsync {
 		 * Again dont know what code oracle is.
 		 */
 		void updateBusCodeOracle(String sql,AsyncCallback<ArrayList<String>> asyncCallback);
-		
+		void updateTripSheetNameOracle(String sql, AsyncCallback<ArrayList<String>> asyncCallback);
+				
 	//TripSheet
 		void saveTripSheet(TripSheetDTO tripSheet,AsyncCallback<TripSheetDTO> asyncCallback);
 		void getTripSheet(int selectedID, AsyncCallback<TripSheetDTO> asyncCallback);
