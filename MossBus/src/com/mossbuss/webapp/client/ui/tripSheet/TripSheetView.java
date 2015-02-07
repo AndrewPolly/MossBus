@@ -18,6 +18,7 @@ import com.mossbuss.webapp.client.dto.StudentDTO;
 import com.mossbuss.webapp.client.ui.print.QuoteGrid;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TabPanel;
 
@@ -27,7 +28,7 @@ public class TripSheetView extends Composite {
 	private TripSheetDTO tripSheet = new TripSheetDTO();
 	private ArrayList<StudentDTO> studentList = new ArrayList<StudentDTO>();
 	private final GreetingServiceAsync greetingService = GWT.create(GreetingService.class);
-	
+	private ArrayList<StudentDTO> nonSelectedStudents = new ArrayList<StudentDTO>();
 	@UiField QuoteGrid studentsGrid;
 	@UiField Label errorLabel;
 	@UiField Button closeButton;
@@ -57,8 +58,48 @@ public class TripSheetView extends Composite {
 			@Override
 			public void onSuccess(ArrayList<StudentDTO> result) {
 				studentList = result;
+				studentsGrid.setGridItems(studentList);
 			}
 		});
+		// init ListBox.
+		greetingService.getStudentsFromTripSheet(-1,new AsyncCallback<ArrayList<StudentDTO>>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				errorLabel.setText(caught.getMessage());
+			}
+
+			@Override
+			public void onSuccess(ArrayList<StudentDTO> result) {
+				nonSelectedStudents = result;
+				initListBox();
+			}
+		});
+		addStudent.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				nonSelectedStudents.get(studentSelectBox.getSelectedIndex()).setTripSheetID(tripSheet.getID());;
+				
+				greetingService.saveStudent(nonSelectedStudents.get(studentSelectBox.getSelectedIndex()), new AsyncCallback<StudentDTO>() {
+
+					@Override
+					public void onFailure(Throwable caught) {
+						errorLabel.setText(caught.getMessage());
+					}
+		
+					@Override
+					public void onSuccess(StudentDTO result) {
+						studentList.add(result);
+						studentsGrid.insertLineToGrid(result);
+						
+					}
+				});
+				nonSelectedStudents.remove(studentSelectBox.getSelectedIndex());
+				initListBox();
+				//customerSearch.setVisible(true);
+			}
+		});
+		studentsGrid.setGridItems(studentList);
 		
 	}
 
@@ -73,6 +114,14 @@ public class TripSheetView extends Composite {
 	public Button getAddStudentButton() {
 		return addStudent;
 	}
-
+	public void initListBox() {
+		for (int i = 0; i < studentSelectBox.getItemCount(); i++) {
+			studentSelectBox.removeItem(i);
+		}
+		
+		for (int i = 0; i < nonSelectedStudents.size(); i++) {
+			studentSelectBox.addItem(nonSelectedStudents.get(i).getStudentName());
+		}
+	}
 
 }

@@ -133,6 +133,7 @@ public class QuoteGrid  extends FlexTable {
 	}
 	public void setGridItems(ArrayList<StudentDTO> students) {
 		this.gridItems = students;
+		drawGrid();
 	}
 
 }
