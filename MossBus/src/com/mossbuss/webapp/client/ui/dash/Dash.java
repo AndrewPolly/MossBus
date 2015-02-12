@@ -4,6 +4,8 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.PopupPanel;
@@ -129,49 +131,69 @@ public class Dash extends Composite {
 			public void onClick(ClickEvent event) {
 				final TripSheetSearch tripSheetSearch = new TripSheetSearch();
 				tripSheetSearch.getCancelButton().setVisible(false);
-				tripSheetSearch.getSelectButton().setText("Edit");
-				tripSheetSearch.getSelectButton().addClickHandler(new ClickHandler() {
+				tripSheetSearch.getSelectButton().setText("Print");
+				
+//				tripSheetSearch.getSelectButton().addClickHandler(new ClickHandler() {
+//					@Override
+//					public void onClick(ClickEvent event) {
+//						//customerSearch.setVisible(false);
+//						final TripSheetEdit tripSheetEdit = new TripSheetEdit();
+//						tripSheetEdit.setTripSheet(tripSheetSearch.getTripSheet());
+//						final PopupPanel pPanel = new PopupPanel();
+//						tripSheetEdit.getCancelButton().addClickHandler(new ClickHandler() {
+//							@Override
+//							public void onClick(ClickEvent event) {
+//								pPanel.hide();
+//								//customerSearch.setVisible(true);
+//							}
+//						});
+//						
+//						tripSheetEdit.getSaveButton().addClickHandler(new ClickHandler() {
+//							@Override
+//							public void onClick(ClickEvent event) {
+//								greetingService.saveTripSheet(tripSheetEdit.getTripSheet(), new AsyncCallback<TripSheetDTO>() {
+//
+//									@Override
+//									public void onFailure(Throwable caught) {
+//										// TODO Fix This:
+//										//errorLabel.setText(caught.getMessage());
+//									}
+//
+//									@Override
+//									public void onSuccess(TripSheetDTO result) {
+//										tripSheetSearch.setTripSheet(result);
+//									}
+//								});
+//								pPanel.hide();
+//								//customerSearch.setVisible(true);
+//							}
+//						});
+//						
+//						pPanel.add(tripSheetEdit);
+//						pPanel.setModal(true);
+//						pPanel.center();
+//						
+//					}
+//				});
+				
+				tripSheetSearch.getTripView().getPrintButton().addClickHandler(new ClickHandler() {
 					@Override
 					public void onClick(ClickEvent event) {
-						//customerSearch.setVisible(false);
-						final TripSheetEdit tripSheetEdit = new TripSheetEdit();
-						tripSheetEdit.setTripSheet(tripSheetSearch.getTripSheet());
-						final PopupPanel pPanel = new PopupPanel();
-						tripSheetEdit.getCancelButton().addClickHandler(new ClickHandler() {
-							@Override
-							public void onClick(ClickEvent event) {
-								pPanel.hide();
-								//customerSearch.setVisible(true);
-							}
-						});
+						Window.setTitle("Trip Sheet for: " + tripSheetSearch.getTripSheet().getDriverName());
+						tripSheetSearch.getTripView().getPrintButton().setVisible(false);
 						
-						tripSheetEdit.getSaveButton().addClickHandler(new ClickHandler() {
-							@Override
-							public void onClick(ClickEvent event) {
-								greetingService.saveTripSheet(tripSheetEdit.getTripSheet(), new AsyncCallback<TripSheetDTO>() {
-
-									@Override
-									public void onFailure(Throwable caught) {
-										// TODO Fix This:
-										//errorLabel.setText(caught.getMessage());
-									}
-
-									@Override
-									public void onSuccess(TripSheetDTO result) {
-										tripSheetSearch.setTripSheet(result);
-									}
-								});
-								pPanel.hide();
-								//customerSearch.setVisible(true);
-							}
-						});
+						navMenu.setVisible(false);
+						Window.print();
+						tripSheetSearch.getTripView().getPrintButton().setVisible(true);
+						Window.setTitle("Ticket App");
+						navMenu.setVisible(true);
 						
-						pPanel.add(tripSheetEdit);
-						pPanel.setModal(true);
-						pPanel.center();
 						
+						//customerSearch.setVisible(true);
 					}
 				});
+				
+	
 				dataPanel.clear();
 				dataPanel.add(tripSheetSearch);
 				

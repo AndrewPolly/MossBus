@@ -48,8 +48,10 @@ public interface GreetingService extends RemoteService {
 				throws Exception;
 		ArrayList<StudentDTO> getStudentsFromTripSheet(int selectedTripSheetID)
 				throws Exception;
-		ArrayList<DriverDTO> getAllDrivers() throws Exception;
-		ArrayList<BusDTO> getAllBusses() throws Exception;
+		// getAll methods will put drivers/busses that belong to given TripSheetID at index 0, for convenience.
+		ArrayList<DriverDTO> getAllDrivers(int TripSheetID) throws Exception;
+		ArrayList<BusDTO> getAllBusses(int TripSheetID) throws Exception;
+		
 		void updateDBtripSheetSelected(int tripSheetID) throws Exception;
 		ArrayList<String> updateTripSheetNameOracle(String sql)
 				throws Exception;

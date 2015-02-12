@@ -321,12 +321,16 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements
 				return studentlist;
 	}
 	@Override
-	public ArrayList<DriverDTO> getAllDrivers() throws Exception {
+	public ArrayList<DriverDTO> getAllDrivers(int TripSheetID) throws Exception {
 		ArrayList<DriverDTO> driverlist = new ArrayList<DriverDTO>();
-		
+		ArrayList<Integer> checker = new ArrayList<Integer>();
+		DriverDTO realDriver = new DriverDTO();
 				Statement stmt = null;
 				Connection conn = null;
 				ResultSet rs = null;
+				Statement stmt2 = null;
+				
+				ResultSet rs2 = null;
 				System.out.println("111111");
 				try {
 					synchronized (serverDataSource) {
@@ -336,10 +340,17 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements
 					String sql = "select id from driver";
 					stmt = conn.createStatement();
 					rs = stmt.executeQuery(sql);
+					
 					System.out.println("33333333");
+					
+					
 					while(rs.next()) {			
-						System.out.println("WHILE WHILE WHILE WHILE WHILE WHILE");
-						driverlist.add(getDriver(rs.getInt("id")));
+						int x = rs.getInt("id");
+						if (getDriver(x).getTripSheetID() == TripSheetID) {
+							driverlist.add(0, getDriver(x));
+						} else if (getDriver(x).getTripSheetID() < 0) {
+							driverlist.add(getDriver(x));
+						}
 					}
 					
 //					srs = stmt.executeQuery("select * from StudentName");
@@ -348,17 +359,17 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements
 //					}
 				
 				} finally {
-					System.out.println("44444444");
+					
 					if (rs != null) {
 						try { rs.close(); } catch(SQLException ex) {}
 						rs=null;
 					}
-					System.out.println("55555555");
+					
 					if (stmt != null) {
 						try { stmt.close(); } catch(SQLException ex) {}
 						stmt = null;
 					}
-					System.out.println("66666666");
+					
 					if (conn != null) {
 						try { conn.close(); } catch(SQLException ex) {}
 						conn = null;
@@ -368,13 +379,14 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements
 	}
 	
 	@Override
-	public ArrayList<BusDTO> getAllBusses() throws Exception {
+	public ArrayList<BusDTO> getAllBusses(int TripSheetID) throws Exception {
 		ArrayList<BusDTO> buslist = new ArrayList<BusDTO>();
-		
+		ArrayList<Integer> checker = new ArrayList<Integer>();
 				Statement stmt = null;
 				Connection conn = null;
 				ResultSet rs = null;
-				ResultSet srs = null;
+				
+				
 				try {
 					synchronized (serverDataSource) {
 						conn = serverDataSource.getConnection();
@@ -382,10 +394,17 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements
 					String sql = "select id from bus";
 					stmt = conn.createStatement();
 					rs = stmt.executeQuery(sql);
-				
+					
 					while(rs.next()) {			
-						buslist.add(getBus(rs.getInt("id")));
+						int x = rs.getInt("id");
+						if (getBus(x).getTripSheetID() == TripSheetID) {
+							buslist.add(0, getBus(x));
+						} else if (getBus(x).getTripSheetID() < 0) {
+							buslist.add(getBus(x));
+						}
 					}
+					
+					
 					
 //					srs = stmt.executeQuery("select * from StudentName");
 //					while(srs.next()) {
@@ -401,6 +420,7 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements
 						try { stmt.close(); } catch(SQLException ex) {}
 						stmt = null;
 					}
+					
 					if (conn != null) {
 						try { conn.close(); } catch(SQLException ex) {}
 						conn = null;
@@ -622,7 +642,10 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements
 	public TripSheetDTO saveTripSheet(TripSheetDTO tripDetails)
 			throws Exception {
 		TripSheet tripSheet = new TripSheet();
+		DriverDTO driver = new DriverDTO();
+		BusDTO bus = new BusDTO();
 		tripSheet.setData(tripDetails);
+		
 		//Save
 		Session session = null;
 		try{
@@ -650,14 +673,180 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements
 				}
 			}
 		}
+		if (tripSheet.getDriverID() > 0) {
+			driver = getDriver(tripSheet.getDriverID());
+			driver.setTripSheetID(tripSheet.getID());
+			saveDriver(driver);
+		} 
+		if (tripSheet.getBusID() > 0) {
+			bus = getBus(tripSheet.getDriverID());
+			bus.setTripSheetID(tripSheet.getID());
+			saveBus(bus);
+		}
+		updateTripFalicies();
 		tripDetails = tripSheet.getData();
 		return tripDetails;
 		
 		//havent tested.
 	}
 
-
-
+	private void updateTripFaliciesBus(ArrayList<Integer> validBusses) throws Exception {
+		ArrayList<BusDTO> buslist = new ArrayList<BusDTO>();
+		ArrayList<Integer> checker = new ArrayList<Integer>();
+		BusDTO busChanger = new BusDTO();
+				Statement stmt = null;
+				Connection conn = null;
+				ResultSet rs = null;
+				
+				
+				try {
+					synchronized (serverDataSource) {
+						conn = serverDataSource.getConnection();
+					}
+					String sql = "select id from bus";
+					stmt = conn.createStatement();
+					rs = stmt.executeQuery(sql);
+					
+					while(rs.next()) {			
+						int x = rs.getInt("id");
+						if (validBusses.contains(x)) {
+							
+						} else {
+							busChanger = getBus(x);
+							busChanger.setTripSheetID(-1);
+							saveBus(busChanger);
+						}
+					}
+//					srs = stmt.executeQuery("select * from StudentName");
+//					while(srs.next()) {
+//						//System.out.println("" + srs.);
+//					}
+				
+				} finally {
+					if (rs != null) {
+						try { rs.close(); } catch(SQLException ex) {}
+						rs=null;
+					}
+					if (stmt != null) {
+						try { stmt.close(); } catch(SQLException ex) {}
+						stmt = null;
+					}
+					
+					if (conn != null) {
+						try { conn.close(); } catch(SQLException ex) {}
+						conn = null;
+					}
+				}
+				
+	}
+	private void updateTripFaliciesDriver(ArrayList<Integer> validDrivers) throws Exception {
+		ArrayList<BusDTO> buslist = new ArrayList<BusDTO>();
+		ArrayList<Integer> checker = new ArrayList<Integer>();
+		DriverDTO driverChanger = new DriverDTO();
+				Statement stmt = null;
+				Connection conn = null;
+				ResultSet rs = null;
+				
+				
+				try {
+					synchronized (serverDataSource) {
+						conn = serverDataSource.getConnection();
+					}
+					String sql = "select id from bus";
+					stmt = conn.createStatement();
+					rs = stmt.executeQuery(sql);
+					
+					while(rs.next()) {			
+						int x = rs.getInt("id");
+						if (validDrivers.contains(x)) {
+							
+						} else {
+							driverChanger = getDriver(x);
+							driverChanger.setTripSheetID(-1);
+							saveDriver(driverChanger);
+						}
+					}
+//					srs = stmt.executeQuery("select * from StudentName");
+//					while(srs.next()) {
+//						//System.out.println("" + srs.);
+//					}
+				
+				} finally {
+					if (rs != null) {
+						try { rs.close(); } catch(SQLException ex) {}
+						rs=null;
+					}
+					if (stmt != null) {
+						try { stmt.close(); } catch(SQLException ex) {}
+						stmt = null;
+					}
+					
+					if (conn != null) {
+						try { conn.close(); } catch(SQLException ex) {}
+						conn = null;
+					}
+				}
+	}
+	public void updateTripFalicies() throws Exception {
+		ArrayList<Integer> validBusses = new ArrayList<Integer>();
+		ArrayList<Integer> validDrivers = new ArrayList<Integer>();
+		
+		//Fill list of validBusses and validDrivers by scanning through the trip sheets.
+		//
+		ArrayList<BusDTO> buslist = new ArrayList<BusDTO>();
+		ArrayList<Integer> checker = new ArrayList<Integer>();
+				Statement stmt = null;
+				Connection conn = null;
+				ResultSet rs = null;
+				
+				
+				try {
+					synchronized (serverDataSource) {
+						conn = serverDataSource.getConnection();
+					}
+					String sql = "select id from tripsheet";
+					stmt = conn.createStatement();
+					rs = stmt.executeQuery(sql);
+					
+					while(rs.next()) {			
+						int x = rs.getInt("id");
+						if (getTripSheet(x).getBusID() > 0) {
+							validBusses.add(getTripSheet(x).getBusID());
+						} 
+						if (getTripSheet(x).getDriverID() > 0) {
+							validDrivers.add(getTripSheet(x).getBusID());
+						}
+					}
+					
+					updateTripFaliciesBus(validBusses);
+					updateTripFaliciesDriver(validDrivers);
+					
+//					srs = stmt.executeQuery("select * from StudentName");
+//					while(srs.next()) {
+//						//System.out.println("" + srs.);
+//					}
+				
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} finally {
+					if (rs != null) {
+						try { rs.close(); } catch(SQLException ex) {}
+						rs=null;
+					}
+					if (stmt != null) {
+						try { stmt.close(); } catch(SQLException ex) {}
+						stmt = null;
+					}
+					
+					if (conn != null) {
+						try { conn.close(); } catch(SQLException ex) {}
+						conn = null;
+					}
+				}
+				
+		
+	}
 
 
 
@@ -729,7 +918,7 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements
 	}
 
 
-
+	
 	@Override
 	public TripSheetDTO getTripSheet(int selectedID) throws Exception {
 		TripSheet details = new TripSheet();

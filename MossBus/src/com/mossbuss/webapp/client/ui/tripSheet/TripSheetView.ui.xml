@@ -29,9 +29,9 @@
 	
 	</ui:style>
 	<g:HTMLPanel>
-		<g:TabPanel width="451px" height="299px" styleName="gwt-DialogBox" ui:field="tPanel">
+		<g:TabPanel width="451px" height="1000px" styleName="gwt-DialogBox" ui:field="tPanel">
 			<g:Tab text="View Trip Sheet">
-				<g:AbsolutePanel width="445px" height="257px">
+				<g:AbsolutePanel width="445px" height="900px">
 <!-- 				<g:at left="10" top="10"> -->
 <!-- 					<g:Label text="Student View" width="360px" height="18px" horizontalAlignment="ALIGN_CENTER" styleName="headingText"/> -->
 <!-- 				</g:at> -->
@@ -90,7 +90,7 @@
 			</g:AbsolutePanel>
 			</g:Tab>
 			<g:Tab text="Edit Trip Sheet">
-			<g:AbsolutePanel width="445px" height="257px">
+			<g:AbsolutePanel width="445px" height="300px">
 <!-- 				<g:at left="10" top="10"> -->
 <!-- 					<p1:AddressView ui:field="invoiceAddress" width="425px" height="190px"/> -->
 <!-- 				</g:at> -->
@@ -101,7 +101,7 @@
 <!-- 					<g:Button ui:field="backButton" styleName="generalButton" text="Back"/> -->
 <!-- 				</g:at> -->
 					<g:at left="0" top="0">
-					    <p2:TripSheetEdit ui:field="tripEdit" width = "425px" height="190px"/>
+					    <p2:TripSheetEdit ui:field="tripEdit" width = "300px" height="190px"/>
 					</g:at>
 			</g:AbsolutePanel>
 			</g:Tab>

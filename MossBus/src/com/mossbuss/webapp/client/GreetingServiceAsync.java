@@ -45,8 +45,8 @@ public interface GreetingServiceAsync {
 		void saveTripSheet(TripSheetDTO tripSheet,AsyncCallback<TripSheetDTO> asyncCallback);
 		void getTripSheet(int selectedID, AsyncCallback<TripSheetDTO> asyncCallback);
 		
-		void getAllDrivers(AsyncCallback<ArrayList<DriverDTO>> asyncCallback);
-		void getAllBusses(AsyncCallback<ArrayList<BusDTO>> asyncCallback);
+		void getAllDrivers(int TripSheetID, AsyncCallback<ArrayList<DriverDTO>> asyncCallback);
+		void getAllBusses(int TripSheetID, AsyncCallback<ArrayList<BusDTO>> asyncCallback);
 		void updateDBtripSheetSelected(int tripSheetID, AsyncCallback<Void> asyncCallback);
 	
 

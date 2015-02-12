@@ -22,3 +22,40 @@ body {
   padding: 2px;
   margin-bottom:6px;
 }
+.verticalalign {
+	verticalalign: middle;
+}
+.header {
+	height:50px;
+	background:#F0F0F0;
+	border:1px solid #CCC;
+	position:fixed;
+	top:0px;
+	width:100%;
+}
+.picStyle {
+	top:6000px;
+	position:fixed;
+	
+}
+.rowFormatBlue {
+	background-color:#9999FF;
+	opacity:100;
+}
+.rowFormatOrg {
+	background-color:#FFE085;
+	opacity:1;
+	outline-color:#B8B8B8;
+	outline-offset:0;
+	outline-style:dashed;
+	outline-width:thin;
+}
+.tableHead {
+/* 	background-color:#FF6600; */
+	background-color:#FFD452;
+	opacity:200;
+	outline-color:#000000;
+	outline-offset:0;
+	outline-style:solid;
+	outline-width:thin;
+}

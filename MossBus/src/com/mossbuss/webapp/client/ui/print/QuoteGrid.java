@@ -38,9 +38,9 @@ public class QuoteGrid  extends FlexTable {
 		this.getColumnFormatter().setWidth(0, "15px" );
 		this.getColumnFormatter().setWidth(1, "15px" );
 		this.getColumnFormatter().setWidth(2, "200px" );
-		this.getColumnFormatter().setWidth(3, "400px" );
-		this.getColumnFormatter().setWidth(4, "200px" );
-		this.getColumnFormatter().setWidth(7, "15px" );
+//		this.getColumnFormatter().setWidth(3, "400px" );
+//		this.getColumnFormatter().setWidth(4, "200px" );
+//		this.getColumnFormatter().setWidth(7, "15px" );
 		
 	}
 	/**
@@ -94,17 +94,24 @@ public class QuoteGrid  extends FlexTable {
          while(this.getRowCount() > 0){
         	 this.removeRow(0);
          }
-         gridItems = new ArrayList<StudentDTO>();
-         drawGrid();
+         
 	}
     
 	public void drawGrid() {
-		this.clear();
-		this.setCellHeader(0, 0, "Student ID");
+		
+		this.clearGrid();
+		this.setCellHeader(0, 0, "ID");
 	    this.setCellHeader(0, 1, "Student Name");
 	    this.setCellHeader(0, 2, "Address");		
-	    
-		if(gridItems == null || gridItems.size() <= 0){
+	    this.getRowFormatter().setStyleName(0, "tableHead");
+	    this.getCellFormatter().getElement(0,0).getStyle().setProperty("fontSize", Integer.toString(16) + "px");
+	    this.getCellFormatter().getElement(0,1).getStyle().setProperty("fontSize", Integer.toString(16) + "px");
+	    this.getCellFormatter().getElement(0,2).getStyle().setProperty("fontSize", Integer.toString(16) + "px");
+		this.setText(1, 0, " ");
+		this.setText(1, 1, " ");
+		this.setText(1, 2, " ");
+//		this.getColumnFormatter().
+	    if(gridItems == null || gridItems.size() <= 0){
 			this.setText(1, 2, "There are no items to display.");
 			//this.setText(1, 2, "");
 			return;
@@ -116,6 +123,11 @@ public class QuoteGrid  extends FlexTable {
 				this.getCellFormatter().setVerticalAlignment(rowIndex+1, 2, HasVerticalAlignment.ALIGN_TOP);
 				
 				String ID = "" + gridItems.get(rowIndex).getID();
+				if (rowIndex % 2 == 0) {
+//					this.getRowFormatter().setStyleName(rowIndex+1, "rowFormatBlue");
+				} else {
+					this.getRowFormatter().setStyleName(rowIndex+1, "rowFormatOrg");
+				}
 				
 				this.setText(rowIndex+1, 0, ID);
 				this.setText(rowIndex+1, 1, gridItems.get(rowIndex).getStudentName());

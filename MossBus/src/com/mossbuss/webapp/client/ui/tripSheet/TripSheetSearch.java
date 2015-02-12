@@ -121,6 +121,7 @@ public class TripSheetSearch extends Composite {
 						});
 					}
 				});
+				
 				pPanel.hide();
 			}
 		});
@@ -130,6 +131,7 @@ public class TripSheetSearch extends Composite {
 			public void onChange(ChangeEvent event) {
 				driver = tripSheetEdit.getDriverSelection();
 				updateDriver(driver);
+				
 			}
 		});
 		tripSheetEdit.getBusSelectBox().addChangeHandler(new ChangeHandler() {
@@ -152,6 +154,9 @@ public class TripSheetSearch extends Composite {
 	}
 	public void updateBus(BusDTO bus) {
 		this.TripSheet.setBusID(bus.getID());
+	}
+	public TripSheetView getTripView() {
+		return tripSheetViewPanel;
 	}
 //	public Button getSelectButton(){
 //		return tripSheetViewPanel.getCloseButton();

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.ListBox;
@@ -19,6 +20,7 @@ import com.mossbuss.webapp.client.ui.print.QuoteGrid;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TabPanel;
 
@@ -35,6 +37,8 @@ public class TripSheetView extends Composite {
 	@UiField TripSheetEdit tripEdit;
 	@UiField Button addStudent;
 	@UiField ListBox studentSelectBox;
+	@UiField TabPanel tPanel;
+	
 	interface TripSheetViewUiBinder extends UiBinder<Widget, TripSheetView> {
 	}
 
@@ -48,6 +52,8 @@ public class TripSheetView extends Composite {
 	
 	public void setTripSheet(TripSheetDTO trip) {
 		this.tripSheet = trip;
+		tripEdit.setTripSheet(trip);
+		tripEdit.initTripSheet();
 		greetingService.getStudentsFromTripSheet(tripSheet.getID(),new AsyncCallback<ArrayList<StudentDTO>>() {
 
 			@Override
@@ -61,8 +67,28 @@ public class TripSheetView extends Composite {
 				studentsGrid.setGridItems(studentList);
 			}
 		});
+		tripEdit.getSaveButton().addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				greetingService.saveTripSheet(tripEdit.getTripSheet(), new AsyncCallback<TripSheetDTO>() {
+
+					@Override
+					public void onFailure(Throwable caught) {
+						// TODO Fix This:
+						//errorLabel.setText(caught.getMessage());
+					}
+
+					@Override
+					public void onSuccess(TripSheetDTO result) {
+						tripEdit.setTripSheet(result);
+					}
+				});
+				
+				//customerSearch.setVisible(true);
+			}
+		});
 		// init ListBox.
-		greetingService.getStudentsFromTripSheet(-1,new AsyncCallback<ArrayList<StudentDTO>>() {
+		greetingService.getStudentsFromTripSheet(-1, new AsyncCallback<ArrayList<StudentDTO>>() {
 
 			@Override
 			public void onFailure(Throwable caught) {
@@ -95,6 +121,7 @@ public class TripSheetView extends Composite {
 					}
 				});
 				nonSelectedStudents.remove(studentSelectBox.getSelectedIndex());
+				
 				initListBox();
 				//customerSearch.setVisible(true);
 			}
@@ -115,13 +142,18 @@ public class TripSheetView extends Composite {
 		return addStudent;
 	}
 	public void initListBox() {
-		for (int i = 0; i < studentSelectBox.getItemCount(); i++) {
-			studentSelectBox.removeItem(i);
-		}
+		
+		
+		studentSelectBox.clear();
 		
 		for (int i = 0; i < nonSelectedStudents.size(); i++) {
 			studentSelectBox.addItem(nonSelectedStudents.get(i).getStudentName());
 		}
+		studentSelectBox.setSelectedIndex(0);
 	}
+	public Button getPrintButton() {
+		return closeButton;
+	}
+	
 
 }

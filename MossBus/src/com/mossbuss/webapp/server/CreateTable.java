@@ -20,7 +20,13 @@ public class CreateTable {
 		doReset();
 		createAdmin("2andrewp2@gmail.com", "Andrew", "Ghosty678");
 		createAdmin("diteremail@email.com", "Dieter", "Dieter4");
+		createAdmin("AjLolHemAdemail@email.com", "Aj", "Dieter4");
+		createAdmin("DebbieGGemail@email.com", "Debbie", "Dieter4");
+		createAdmin("someoneemail@email.com", "Another", "Dieter4");
 		createBus("Bus1");
+		createBus("AJS POES BUS");
+		createBus("Bus 3");
+		createBus("Stevie wonder");
 		System.out.println("Completed");
 	}
 	public static void doReset(){
