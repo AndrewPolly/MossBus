@@ -77,7 +77,9 @@ public class Login extends Composite {
 				
 				//goto dash
 				Dash dashPanel = new Dash();
+				
 				dashPanel.setOnlineUser(result);
+				dashPanel.init();
 				RootPanel.get("appContainer").clear();
 				RootPanel.get("appContainer").add(dashPanel);
 				//dashPanel.setOnlineUser(result);

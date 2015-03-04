@@ -6,5 +6,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Hibernate"/>
 	<classpathentry kind="lib" path="C:/Users/PollyG/workspace/QTS/war/WEB-INF/lib/mysql-connector-java-5.0.5-bin.jar"/>
+	<classpathentry kind="lib" path="C:/Users/PollyG/Downloads/smsj-20051126.jar"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>

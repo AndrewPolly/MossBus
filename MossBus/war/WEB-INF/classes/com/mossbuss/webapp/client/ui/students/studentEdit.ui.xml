@@ -1,99 +1,110 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
-	xmlns:g="urn:import:com.google.gwt.user.client.ui" >
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
 	<ui:style>
 	
 	</ui:style>
 	<g:HTMLPanel>
-		<g:TabPanel width="451px" height="299px" styleName="gwt-DialogBox" ui:field="tPanel">
-			<g:Tab text="Customer Details">
+		<g:TabPanel width="451px" height="299px" styleName="gwt-DialogBox"
+			ui:field="tPanel">
+			<g:Tab text="Parent Details">
 				<g:AbsolutePanel width="451px" height="257px">
-				<g:at left="10" top="10">
-					<g:Label text="Customer Edit" width="371px" height="18px" horizontalAlignment="ALIGN_CENTER" styleName="headingText"/>
-				</g:at>
-				
-				<g:at left="10" top="55">
-					<g:Label text="Address:"/>
-				</g:at>
-				<g:at left="72" top="55">
-					<g:TextBox width="348px" height="6px" ui:field="addressField"/>
-				</g:at>
-				<g:at left="10" top="79">
-					<g:Label text="Parent Name:"/>
-				</g:at>
-				<g:at left="72" top="79">
-					<g:TextBox width="348px" height="6px" ui:field="parentName"/>
-				</g:at>
-				<g:at left="10" top="103">
-					<g:Label text="Email:"/>
-				</g:at>
-				<g:at left="72" top="103">
-					<g:TextBox width="348px" height="6px" ui:field="emailAddress"/>
-				</g:at>
-				
-				
-				
-				<g:at left="10" top="151">
-					<g:Label text="Cell:"/>
-				</g:at>
-				<g:at left="72" top="151">
-					<g:TextBox width="112px" height="6px" ui:field="cellNumber"/>
-				</g:at>
-				
-				
-				
-				
-				<g:at left="10" top="206">
-					<g:Button styleName="generalButton" ui:field="cancelButton">Cancel</g:Button>
-				</g:at>
-				
-				<g:at left="196" top="179">
-					<g:Label width="234px" height="18px" ui:field="errorLabel" styleName="serverResponseLabelError"/>
-				</g:at>
-				<g:at left="341" top="206">
-					<g:Button width="125px" height="41px" ui:field="nextButton" styleName="generalButton" text="Next">Next</g:Button>
-				</g:at>
-			</g:AbsolutePanel>
-			</g:Tab>
-			
-			<g:Tab text="Add Students">
-			<g:AbsolutePanel width="445px" height="257px">
-				<g:at left="10" top="55">
-					<g:Label text="Student Name:"/>
-				</g:at>
-				<g:at left="72" top="55">
-					<g:TextBox width="348" height="6px" ui:field="studentNames" />
-				</g:at>
-				<g:at left="345" top="216">
-					<g:Button styleName="generalButton" text="Next" width="100px" height="41px" ui:field="nextButton2"/>
-				</g:at>
-				<g:at left="245" top="216">
-					<g:Button styleName="generalButton" text="Add Student" width="100px" height="41px" ui:field="addStudentButton"/>
-				</g:at>
-<!-- 				<g:at left="10" top="10"> -->
-<!-- 					<p1:addressPanel ui:field="invoiceAddress"/> -->
-<!-- 				</g:at> -->
-				<g:at left="0" top="216">
-					<g:Button ui:field="backbutton1" styleName="generalButton" text="Back" width="100px" height="41px"/>
-				</g:at>
-				
-			</g:AbsolutePanel>
-			</g:Tab>
-			<g:Tab text="Assign To Trip Sheet">
-				<g:AbsolutePanel width="440px" height="258px">
-<!-- 					<g:at left="10" top="10"> -->
-<!-- 						<p1:addressPanel ui:field="deliveryAddress"/> -->
-<!-- 					</g:at> -->
-					<g:at left="0" top="217">
-						<g:Button styleName="generalButton" width="100px" height="41px" text="Back" ui:field="backButton3"/>
+					<g:at left="10" top="10">
+						<g:Label text="Parent Edit" width="371px" height="18px"
+							horizontalAlignment="ALIGN_CENTER" styleName="headingText" />
 					</g:at>
-					<g:at left="340" top="217">
-						<g:Button styleName="generalButton" text="Save" ui:field="saveButton"/>
+
+					<g:at left="10" top="55">
+						<g:Label text="Address:" />
+					</g:at>
+					<g:at left="95" top="55">
+						<g:TextBox width="70%" height="6px" ui:field="addressField" />
+					</g:at>
+					<g:at left="10" top="79">
+						<g:Label text="Parent Name:" />
+					</g:at>
+					<g:at left="95" top="79">
+						<g:TextBox width="60%" height="6px" ui:field="parentName" />
+					</g:at>
+					<g:at left="10" top="103">
+						<g:Label text="Email:" />
+					</g:at>
+					<g:at left="95" top="103">
+						<g:TextBox width="50%" height="6px" ui:field="emailAddress" />
+					</g:at>
+
+
+
+					<g:at left="10" top="127">
+						<g:Label text="Cell:" />
+					</g:at>
+					<g:at left="95" top="127">
+						<g:TextBox width="30%" height="6px" ui:field="cellNumber" />
+					</g:at>
+
+					<g:at left="10" top="151">
+						<g:Label text="Pay Option:" />
+					</g:at>
+					<g:at left="95" top="151">
+						<g:ListBox width="30%" height="18px" ui:field="payBox" />
+					</g:at>
+
+
+					<g:at left="10" top="206">
+						<g:Button styleName="generalButton" ui:field="cancelButton">Cancel</g:Button>
+					</g:at>
+
+					<g:at left="196" top="179">
+						<g:Label width="234px" height="18px" ui:field="errorLabel"
+							styleName="serverResponseLabelError" />
+					</g:at>
+					<g:at left="341" top="206">
+						<g:Button ui:field="nextButton" styleName="generalButton"
+							text="Next">Next</g:Button>
 					</g:at>
 				</g:AbsolutePanel>
 			</g:Tab>
-			
-			
+
+			<g:Tab text="Add Students">
+				<g:AbsolutePanel width="445px" height="257px">
+					<g:at left="10" top="55">
+						<g:Label text="Student Name:" />
+					</g:at>
+					<g:at left="96" top="55">
+						<g:TextBox width="60%" height="6px" ui:field="studentNames" />
+					</g:at>
+					<g:at left="345" top="216">
+						<g:Button styleName="generalButton" text="Next" ui:field="nextButton2" />
+					</g:at>
+					<g:at left="245" top="216">
+						<g:Button styleName="generalButton" text="Add Student"
+							ui:field="addStudentButton" />
+					</g:at>
+					<!-- <g:at left="10" top="10"> -->
+					<!-- <p1:addressPanel ui:field="invoiceAddress"/> -->
+					<!-- </g:at> -->
+					<g:at left="0" top="216">
+						<g:Button ui:field="backbutton1" styleName="generalButton"
+							text="Back" />
+					</g:at>
+
+				</g:AbsolutePanel>
+			</g:Tab>
+			<g:Tab text="Assign To Trip Sheet">
+				<g:AbsolutePanel width="440px" height="258px">
+					<!-- <g:at left="10" top="10"> -->
+					<!-- <p1:addressPanel ui:field="deliveryAddress"/> -->
+					<!-- </g:at> -->
+					<g:at left="0" top="217">
+						<g:Button styleName="generalButton" text="Back" ui:field="backButton3" />
+					</g:at>
+					<g:at left="340" top="217">
+						<g:Button styleName="generalButton" text="Save" ui:field="saveButton" />
+					</g:at>
+				</g:AbsolutePanel>
+			</g:Tab>
+
+
 		</g:TabPanel>
 	</g:HTMLPanel>
 </ui:UiBinder> 

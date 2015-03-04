@@ -1,0 +1,2 @@
+serviceClass: com.mossbuss.webapp.client.GreetingService
+path: 9CBE95E6C1D1AF3248ACB1D00658D533.gwt.rpc

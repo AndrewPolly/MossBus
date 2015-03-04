@@ -50,6 +50,62 @@ public class TripSheetView extends Composite {
 		return tripSheet;
 	}
 	
+	public void initTripSheetButtons() {
+		tripEdit.getSaveButton().addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				greetingService.saveTripSheet(tripEdit.getTripSheet(), new AsyncCallback<TripSheetDTO>() {
+
+					@Override
+					public void onFailure(Throwable caught) {
+						// TODO Fix This:
+						//errorLabel.setText(caught.getMessage());
+					}
+
+					@Override
+					public void onSuccess(TripSheetDTO result) {
+						tripEdit.setTripSheet(result);
+					}
+				});
+			
+				//customerSearch.setVisible(true);
+			}
+		});
+		
+		addStudent.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				if (studentSelectBox.getSelectedIndex() == -1) {
+					System.out.println("was -1 changed to 0");
+					studentSelectBox.setSelectedIndex(0);
+				}
+				if (studentSelectBox.getItemCount() < 1) {
+					return;
+				}
+				nonSelectedStudents.get(studentSelectBox.getSelectedIndex()).setTripSheetID(tripSheet.getID());;
+				
+				greetingService.saveStudent(nonSelectedStudents.get(studentSelectBox.getSelectedIndex()), new AsyncCallback<StudentDTO>() {
+
+					@Override
+					public void onFailure(Throwable caught) {
+						errorLabel.setText(caught.getMessage());
+					}
+		
+					@Override
+					public void onSuccess(StudentDTO result) {
+						studentList.add(result);
+//						studentsGrid.insertLineToGrid(result);
+						studentsGrid.setGridItems(studentList);
+						
+					}
+				});
+				nonSelectedStudents.remove(studentSelectBox.getSelectedIndex());
+				
+				initListBox();
+				//customerSearch.setVisible(true);
+			}
+		});
+	}
 	public void setTripSheet(TripSheetDTO trip) {
 		this.tripSheet = trip;
 		tripEdit.setTripSheet(trip);
@@ -67,26 +123,7 @@ public class TripSheetView extends Composite {
 				studentsGrid.setGridItems(studentList);
 			}
 		});
-		tripEdit.getSaveButton().addClickHandler(new ClickHandler() {
-			@Override
-			public void onClick(ClickEvent event) {
-				greetingService.saveTripSheet(tripEdit.getTripSheet(), new AsyncCallback<TripSheetDTO>() {
-
-					@Override
-					public void onFailure(Throwable caught) {
-						// TODO Fix This:
-						//errorLabel.setText(caught.getMessage());
-					}
-
-					@Override
-					public void onSuccess(TripSheetDTO result) {
-						tripEdit.setTripSheet(result);
-					}
-				});
-				
-				//customerSearch.setVisible(true);
-			}
-		});
+		
 		// init ListBox.
 		greetingService.getStudentsFromTripSheet(-1, new AsyncCallback<ArrayList<StudentDTO>>() {
 
@@ -101,32 +138,8 @@ public class TripSheetView extends Composite {
 				initListBox();
 			}
 		});
-		addStudent.addClickHandler(new ClickHandler() {
-			@Override
-			public void onClick(ClickEvent event) {
-				nonSelectedStudents.get(studentSelectBox.getSelectedIndex()).setTripSheetID(tripSheet.getID());;
-				
-				greetingService.saveStudent(nonSelectedStudents.get(studentSelectBox.getSelectedIndex()), new AsyncCallback<StudentDTO>() {
-
-					@Override
-					public void onFailure(Throwable caught) {
-						errorLabel.setText(caught.getMessage());
-					}
 		
-					@Override
-					public void onSuccess(StudentDTO result) {
-						studentList.add(result);
-						studentsGrid.insertLineToGrid(result);
-						
-					}
-				});
-				nonSelectedStudents.remove(studentSelectBox.getSelectedIndex());
-				
-				initListBox();
-				//customerSearch.setVisible(true);
-			}
-		});
-		studentsGrid.setGridItems(studentList);
+		
 		
 	}
 
@@ -138,9 +151,9 @@ public class TripSheetView extends Composite {
 		System.out.println("XXX GET CLOSEBUTTON IN TRIPSHEET VIEW GOT CALLED");
 		return closeButton;
 	}
-	public Button getAddStudentButton() {
-		return addStudent;
-	}
+//	public Button getAddStudentButton() {
+//		return addStudent;
+//	}
 	public void initListBox() {
 		
 		

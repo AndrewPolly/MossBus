@@ -1,6 +1,7 @@
 package com.mossbuss.webapp.server.data;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,6 +24,7 @@ public class Client {
 	private String parentName;
 	private String cellNumber;
 	private String Address;
+	private Date lastPayed;
 	
 	public Client() {
 		
@@ -76,6 +78,13 @@ public class Client {
 	public void setAddress(String address) {
 		this.Address = address;
 	}
+	@Column(name="LastPayed")
+	public Date getDateLastDebited() {
+		return this.lastPayed;
+	}
+	public void setDateLastDebited(Date newDate) {
+		this.lastPayed = newDate;
+	}
 	@Id
 	@GeneratedValue
 	@Column(name="id")
@@ -95,6 +104,7 @@ public class Client {
 		client.setParentName(this.getParentName());
 		client.setCellNumber(this.getCellNumber());
 		client.setAddress(this.getAddress());
+		client.setDateLastDebited(this.getDateLastDebited());
 		return client;
 	}
 
@@ -107,5 +117,6 @@ public class Client {
 		this.setParentName(client.getParentName());
 		this.setCellNumber(client.getCellNumber());
 		this.setAddress(client.getAddress());
+		this.setDateLastDebited(client.getDateLastDebited());
 	}
 }

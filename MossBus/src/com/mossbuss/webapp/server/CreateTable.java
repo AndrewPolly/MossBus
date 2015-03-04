@@ -5,6 +5,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
 import org.hibernate.tool.hbm2ddl.SchemaExport;
 
+import com.mossbuss.webapp.server.data.Attendance;
 import com.mossbuss.webapp.server.data.Driver;
 import com.mossbuss.webapp.server.data.Bus;
 import com.mossbuss.webapp.server.data.Client;
@@ -40,11 +41,12 @@ public class CreateTable {
 		config.addAnnotatedClass(MaintenanceRecord.class);
 		config.addAnnotatedClass(TripSheet.class);
 		config.addAnnotatedClass(Student.class);
-		
+		config.addAnnotatedClass(Attendance.class);
 
 			//Action
 		config.configure();
 		new SchemaExport(config).create(true, true);
+//		createAdmin("testAdmin@test.com", "Andrew", "test");
 	}
 	public static void createBus(String BusName) {
 		Bus newBus = new Bus();

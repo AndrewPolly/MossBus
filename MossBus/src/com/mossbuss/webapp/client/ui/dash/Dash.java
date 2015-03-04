@@ -1,5 +1,10 @@
 package com.mossbuss.webapp.client.ui.dash;
 
+import java.io.IOException;
+
+import org.marre.SmsSender;
+import org.marre.sms.SmsException;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -8,6 +13,7 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.uibinder.client.UiField;
@@ -17,6 +23,8 @@ import com.mossbuss.webapp.client.dto.ClientDTO;
 import com.mossbuss.webapp.client.dto.DriverDTO;
 import com.mossbuss.webapp.client.dto.StudentDTO;
 import com.mossbuss.webapp.client.dto.TripSheetDTO;
+import com.mossbuss.webapp.client.ui.driver.DriverView;
+import com.mossbuss.webapp.client.ui.maintenanceRecords.BusView;
 import com.mossbuss.webapp.client.ui.students.studentEdit;
 import com.mossbuss.webapp.client.ui.students.studentSearch;
 import com.mossbuss.webapp.client.ui.tripSheet.TripSheetEdit;
@@ -30,96 +38,65 @@ public class Dash extends Composite {
 	private DriverDTO onlineUser;
 	@UiField VerticalPanel dataPanel;
 	@UiField NavMenu navMenu;
-
+	@UiField Label greetingLabel;
 	interface DashUiBinder extends UiBinder<Widget, Dash> {
 	}
-
 	public Dash() {
 		initWidget(uiBinder.createAndBindUi(this));
 		
+	}
+	public void init() {
+		
+		navMenu.setStyleName("navButton");
+		navMenu.maintenanceMenu.setStyleName("navButton");
+		navMenu.studentsMenu.setStyleName("navButton");
+		navMenu.tripSheetMenu.setStyleName("navButton");
+//		initWidget(uiBinder.createAndBindUi(this));
+//		navMenu.setStyleName("navMenu");
+		
+		//check database for people that owe money.. this 
+		//must be moved server side with a timer.
+		// its actually just pathetic..
+		if (onlineUser.getAdmin()) {
+			greetingService.checkClientsForSms(new AsyncCallback<Void>() {
+
+				@Override
+				public void onFailure(Throwable caught) {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void onSuccess(Void result) {
+				System.out.println("Succesfully checked clients");
+					
+				}
+				
+				
+			});
+			
+			
+		}
+	
+		greetingLabel.setText("Welcome " + onlineUser.getName());
 		navMenu.maintenanceMenu.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-//				OrderSearch orderSearch = new OrderSearch();
-//				orderSearch.getNewSaleButton().addClickHandler(new ClickHandler() {
-//					
-//					@Override
-//					public void onClick(ClickEvent event) {
-//						QuoteEdit quoteEdit = new QuoteEdit();
-//						quoteEdit.setOnlinUser(getOnlineUser());
-//						dataPanel.clear();
-//						dataPanel.add(quoteEdit);
-//					}
-//				});
-//				dataPanel.clear();
-//				dataPanel.add(orderSearch);
+				BusView busView = new BusView();
+				busView.init();
+				dataPanel.clear();
+				dataPanel.add(busView);
+
 			}
 		});
 		
 		navMenu.studentsMenu.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
+
 				final studentSearch studentSearch = new studentSearch();
 				studentSearch.getCancelButton().setVisible(false);
-				studentSearch.getSelectButton().setText("Edit");
-				studentSearch.getSelectButton().addClickHandler(new ClickHandler() {
-					@Override
-					public void onClick(ClickEvent event) {
-						//customerSearch.setVisible(false);
-						final studentEdit customerEdit = new studentEdit();
-						customerEdit.setClientDetails(studentSearch.getClient());
-						final PopupPanel pPanel = new PopupPanel();
-						customerEdit.getCancelButton().addClickHandler(new ClickHandler() {
-							@Override
-							public void onClick(ClickEvent event) {
-								pPanel.hide();
-								//customerSearch.setVisible(true);
-							}
-						});
-						
-						customerEdit.getSaveButton().addClickHandler(new ClickHandler() {
-							@Override
-							public void onClick(ClickEvent event) {
-								greetingService.saveClient(customerEdit.getClientDetails(), new AsyncCallback<ClientDTO>() {
 
-									@Override
-									public void onFailure(Throwable caught) {
-										// TODO Fix This:
-										//errorLabel.setText(caught.getMessage());
-									}
-
-									@Override
-									public void onSuccess(ClientDTO result) {
-										studentSearch.setCustomer(result);
-									}
-								});
-								pPanel.hide();
-								//customerSearch.setVisible(true);
-							}
-						});
-						customerEdit.getAddStudentButton().addClickHandler(new ClickHandler() {
-							@Override
-							public void onClick(ClickEvent event) {
-								greetingService.saveStudent(customerEdit.getStudentDetails(), new AsyncCallback<StudentDTO>() {
-									@Override
-									public void onFailure(Throwable caught) {
-										//TODO FIX THIS:
-										//errorLabel.setText(caught.getMessage());
-									}
-									@Override
-									public void onSuccess(StudentDTO result) {
-										studentSearch.setStudent(result);
-									}
-								});
-								pPanel.hide();
-							}
-						});
-						pPanel.add(customerEdit);
-						pPanel.setModal(true);
-						pPanel.center();
-						studentSearch.init();
-					}
-				});
 				dataPanel.clear();
 				dataPanel.add(studentSearch);
 			}
@@ -129,10 +106,12 @@ public class Dash extends Composite {
 			
 			@Override
 			public void onClick(ClickEvent event) {
+//				resetNavMenuStyle();
+//				navMenu.tripSheetMenu.setStyleName("navMenuSelected");
 				final TripSheetSearch tripSheetSearch = new TripSheetSearch();
 				tripSheetSearch.getCancelButton().setVisible(false);
 				tripSheetSearch.getSelectButton().setText("Print");
-				
+				tripSheetSearch.getTripView().initTripSheetButtons();
 //				tripSheetSearch.getSelectButton().addClickHandler(new ClickHandler() {
 //					@Override
 //					public void onClick(ClickEvent event) {
@@ -208,22 +187,32 @@ public class Dash extends Composite {
 		navMenu.driversMenu.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-//				StockRequest stockRequest = new StockRequest();
-//				dataPanel.clear();
-//				dataPanel.add(stockRequest);
+				DriverView driverView = new DriverView();
+				driverView.init();
+				dataPanel.clear();
+				dataPanel.add(driverView);
+//				resetNavMenuStyle();
+//				navMenu.driversMenu.setStyleName("navMenuSelected");
 			}
 		});
 		
 	
 		
 	}
-
+	public void resetNavMenuStyle() {
+		navMenu.driversMenu.setStyleName("navMenu");
+		navMenu.maintenanceMenu.setStyleName("navMenu");
+		navMenu.studentsMenu.setStyleName("navMenu");
+		navMenu.tripSheetMenu.setStyleName("navMenu");
+		
+	}
 	public DriverDTO getOnlineUser() {
 		return onlineUser;
 	}
 
 	public void setOnlineUser(DriverDTO onlineUser) {
 		this.onlineUser = onlineUser;
+		System.out.println("set online user, user name is: " + onlineUser.getName() + "user admin status: " + onlineUser.getAdmin());
 //		navMenu.adminMenu.setVisible(onlineUser.getAdmin());
 	}
 }

@@ -1,7 +1,9 @@
 package com.mossbuss.webapp.client.ui.students;
 
 
+
 import java.util.ArrayList;
+import java.util.Date;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -12,6 +14,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.TabPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
@@ -33,7 +36,7 @@ public class studentEdit extends Composite {
 
 	@UiField TextBox parentName;
 	@UiField TextBox emailAddress;
-
+	@UiField ListBox payBox;
 
 	@UiField TextBox cellNumber;
 	@UiField TextBox studentNames;
@@ -50,6 +53,10 @@ public class studentEdit extends Composite {
 	public studentEdit() {
 		initWidget(uiBinder.createAndBindUi(this));
 		//Create Customer Edit Interface based on CustomerDTO
+		payBox.addItem("Monthly");
+		payBox.addItem("Semi-Monthly");
+		payBox.addItem("Weekly");
+		payBox.setSelectedIndex(0);
 		tPanel.selectTab(0);
 	
 	}
@@ -72,10 +79,17 @@ public class studentEdit extends Composite {
 		clientDetails.setParentName(parentName.getText());
 		clientDetails.setEmailAddress(emailAddress.getText());
 		clientDetails.setCellNumber(cellNumber.getText());
-		
-		
+		Date today = new Date();
+		System.out.println("Made new date for new client the date is " + today);
 		clientDetails.setAccBal(0);
+		//add option for this soon!!!!
+		if (payBox.getSelectedIndex() > 1) {
+			clientDetails.setPayOption(4);
+		} else {
+			clientDetails.setPayOption(payBox.getSelectedIndex() + 1);
+		}
 		
+		clientDetails.setDateLastDebited(today);
 		return clientDetails;
 	}
 
@@ -86,6 +100,12 @@ public class studentEdit extends Composite {
 		
 		emailAddress.setText(clientDetails.getEmailAddress());
 		cellNumber.setText(clientDetails.getCellNumber());
+		if (clientDetails.getPayOption() > 2) {
+			payBox.setSelectedIndex(2);
+		} else {
+			payBox.setSelectedIndex(clientDetails.getPayOption()-1);
+		}
+		
 		addressField.setText(clientDetails.getAddress());
 	}
 	public StudentDTO getStudentDetails() {
@@ -108,6 +128,8 @@ public class studentEdit extends Composite {
 	void onBackbutton1Click(ClickEvent event) {
 		tPanel.selectTab(0);
 	}
+	
+	
 	@UiHandler("addStudentButton")
 	void onAddStudentButtonClick(ClickEvent event) {
 		studentDetails = new StudentDTO();
@@ -140,6 +162,7 @@ public class studentEdit extends Composite {
 	@UiHandler("nextButton")
 	void onNextButtonClick(ClickEvent event) {
 		getClientDetails();
+		System.out.println("Next button was clicked saving client with last payed = " + this.clientDetails.getDateLastDebited());
 		greetingService.saveClient(clientDetails, new AsyncCallback<ClientDTO>() {
 
 			@Override

@@ -4,13 +4,14 @@
 	<ui:style>
 	
 	</ui:style>
+<!-- 	horizontalAlignment="ALIGN_CENTER" -->
 	<g:HTMLPanel>
 		<g:VerticalPanel height="237px" width="77px" horizontalAlignment="ALIGN_CENTER">
-			<g:Label text="Navigation" styleName="headingText"/>
-			<g:Label text="Bus Maintenance" ui:field="maintenanceMenu"/>
-			<g:Label text="Trip Sheets" ui:field="tripSheetMenu"/>
-			<g:Label text="Students" ui:field="studentsMenu"/>
-			<g:Label text="Drivers" ui:field="driversMenu"/>
+			<g:Label text="Navigation"/>
+			<g:Button text="Bus Maintenance" ui:field="maintenanceMenu" />
+			<g:Button text="Trip Sheets" ui:field="tripSheetMenu" />
+			<g:Button text="Students" ui:field="studentsMenu" />
+			<g:Button text="Drivers" ui:field="driversMenu"/>
 		</g:VerticalPanel>
 	</g:HTMLPanel>
 </ui:UiBinder> 

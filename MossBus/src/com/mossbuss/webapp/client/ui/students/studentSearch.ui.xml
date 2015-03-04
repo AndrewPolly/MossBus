@@ -7,7 +7,7 @@
 	<g:HTMLPanel>
 		<g:AbsolutePanel height="493px" width="639px">
 			<g:at left="10" top="10">
-				<g:Label text="Customer Search" styleName="headingText" horizontalAlignment="ALIGN_CENTER" width="559px" height="19px"/>
+				<g:Label text="Student Search" styleName="headingText" horizontalAlignment="ALIGN_CENTER" width="559px" height="19px"/>
 			</g:at>
 			<g:at left="10" top="56">
 				<g:Label text="Enter Details:"/>

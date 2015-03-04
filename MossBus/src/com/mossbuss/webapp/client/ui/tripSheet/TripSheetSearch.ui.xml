@@ -4,9 +4,9 @@
 	<ui:style>
 	
 	</ui:style>
-	<g:HTMLPanel>
-		<g:AbsolutePanel height="493px" width="639px">
-			<g:at left="10" top="10">
+	<g:HTMLPanel >
+		<g:AbsolutePanel height="1000px" width="800px">
+			<g:at left="0" top="10">
 				<g:Label text="Trip Sheet Search" styleName="headingText" horizontalAlignment="ALIGN_CENTER" width="559px" height="19px"/>
 			</g:at>
 			<g:at left="10" top="56">

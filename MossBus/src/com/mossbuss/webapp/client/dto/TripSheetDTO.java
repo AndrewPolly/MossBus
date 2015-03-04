@@ -8,8 +8,8 @@ public class TripSheetDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private int id;
-	private int driverID;
 	private int busID;
+	private int driverID;
 	private String tripName;
 	private String driverName;
 	

@@ -66,6 +66,7 @@ public class TripSheetSearch extends Composite {
 	
 	public void init(){
 		tripSheetText.setFocus(true);
+		tripSheetViewPanel.initTripSheetButtons();
 	}
 
 	public TripSheetDTO getTripSheet() {
@@ -84,6 +85,7 @@ public class TripSheetSearch extends Composite {
 	void onNewTripSheetButtonClick(ClickEvent event) {
 		final TripSheetEdit tripSheetEdit = new TripSheetEdit();
 		final PopupPanel pPanel = new PopupPanel();
+		
 		tripSheetEdit.driverInit();
 		tripSheetEdit.busInit();
 		tripSheetEdit.getCancelButton().addClickHandler(new ClickHandler() {
@@ -125,24 +127,10 @@ public class TripSheetSearch extends Composite {
 				pPanel.hide();
 			}
 		});
-		tripSheetEdit.getDriverSelectBox().addChangeHandler(new ChangeHandler() {
-
-			@Override
-			public void onChange(ChangeEvent event) {
-				driver = tripSheetEdit.getDriverSelection();
-				updateDriver(driver);
-				
-			}
-		});
-		tripSheetEdit.getBusSelectBox().addChangeHandler(new ChangeHandler() {
-
-			@Override
-			public void onChange(ChangeEvent event) {
-				bus = tripSheetEdit.getBusSelection();
-				updateBus(bus);
-			}
-		});
+		
+		
 		pPanel.add(tripSheetEdit);
+		pPanel.setStyleName("recordPopUpPanel");
 		pPanel.setModal(true);
 		pPanel.center();
 	}

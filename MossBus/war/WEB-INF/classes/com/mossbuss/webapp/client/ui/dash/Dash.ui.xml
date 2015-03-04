@@ -4,16 +4,16 @@
 	<ui:style>
 	
 	</ui:style>
-	<g:HTMLPanel width="800px" height="768px">
-		<g:AbsolutePanel height="768px" width="800px">
-			<g:at left="10" top="55">
+	<g:HTMLPanel width="100%" height="768px">
+		<g:AbsolutePanel height="768px" width="100%">
+			<g:at left="0" top="55">
 				<p1:NavMenu ui:field="navMenu"/>
 			</g:at>
-			<g:at left="10" top="10">
-				<g:Label text="..." width="720px" height="18px" styleName="headingText" horizontalAlignment="ALIGN_CENTER"/>
+			<g:at left="0" top="0">
+				<g:Label text="..." width="100%" height="18px" styleName="headingText" horizontalAlignment="ALIGN_CENTER" ui:field="greetingLabel"/>
 			</g:at>
 			<g:at left="160" top="55">
-				<g:VerticalPanel width="630px" height="" ui:field="dataPanel"/>
+				<g:VerticalPanel width="100%" height="" ui:field="dataPanel" horizontalAlignment="ALIGN_CENTER"/>
 			</g:at>
 		</g:AbsolutePanel>
 	</g:HTMLPanel>

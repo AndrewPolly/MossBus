@@ -65,6 +65,7 @@ public class MossBus implements EntryPoint {
 			});
 		}else {
 			Login login = new Login();
+			RootPanel.get("appContainer").setStyleName("appContainerStyle");
 			RootPanel.get("appContainer").add(login);
 			login.setFocus();
 		}

@@ -4,9 +4,11 @@ import java.util.ArrayList;
 
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
+import com.mossbuss.webapp.client.dto.AttendanceDTO;
 import com.mossbuss.webapp.client.dto.BusDTO;
 import com.mossbuss.webapp.client.dto.ClientDTO;
 import com.mossbuss.webapp.client.dto.DriverDTO;
+import com.mossbuss.webapp.client.dto.MaintenanceRecordDTO;
 import com.mossbuss.webapp.client.dto.StudentDTO;
 import com.mossbuss.webapp.client.dto.TripSheetDTO;
 
@@ -32,7 +34,7 @@ public interface GreetingService extends RemoteService {
 	StudentDTO getStudent(int selectedID) throws Exception;
 	ClientDTO getClient(int selectedID) throws Exception;
 	TripSheetDTO getTripSheet(int selectedID) throws Exception;
-
+	ArrayList<TripSheetDTO> getAllTripSheets() throws Exception;
 	
 	//Admin
 		void saveDriver(DriverDTO userdetails) throws Exception;
@@ -41,7 +43,7 @@ public interface GreetingService extends RemoteService {
 		void saveBus(BusDTO item) throws Exception;
 		BusDTO getBus(int selectedID) throws Exception;
 		ArrayList<String> updateBusCodeOracle(String sql) throws Exception;
-		
+		DriverDTO getDriver(int selectedID) throws Exception;
 		//Sales
 		TripSheetDTO saveTripSheet(TripSheetDTO orderDetails) throws Exception;
 		ArrayList<StudentDTO> getStudentsFromParent(int selectedParentID)
@@ -55,4 +57,12 @@ public interface GreetingService extends RemoteService {
 		void updateDBtripSheetSelected(int tripSheetID) throws Exception;
 		ArrayList<String> updateTripSheetNameOracle(String sql)
 				throws Exception;
+		void sendSMS(String MSG, String cellNumber) throws Exception;
+		MaintenanceRecordDTO saveMaintenanceRecord(
+				MaintenanceRecordDTO recordDetails) throws Exception;
+		ArrayList<MaintenanceRecordDTO> getRecordsFromBus(int BusID)
+				throws Exception;
+		void checkClientsForSms() throws Exception;
+		void saveAttendance(AttendanceDTO attendanceDetails) throws Exception;
+		
 }

@@ -1,6 +1,7 @@
 package com.mossbuss.webapp.client.dto;
 
 import java.io.Serializable;
+import java.util.Date;
 /**	
  * 	Data Transfer Object for clients.
  * 		Clients are the parents of the children, this holds all there 
@@ -18,7 +19,7 @@ public class ClientDTO implements Serializable {
 	private String parentName;
 	private String cellNumber;
 	private String Address;
-	
+	private Date lastPayed;
 	
 	public int getID() {
 		return id;
@@ -61,5 +62,11 @@ public class ClientDTO implements Serializable {
 	}
 	public String getAddress() {
 		return Address;
+	}
+	public void setDateLastDebited(Date newDate) {
+		this.lastPayed = newDate;
+	}
+	public Date getDateLastDebited() {
+		return this.lastPayed;
 	}
 }
