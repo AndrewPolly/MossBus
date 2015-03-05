@@ -4,10 +4,10 @@
 	<classpathentry kind="con" path="com.google.gwt.eclipse.core.GWT_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Hibernate"/>
-	<classpathentry kind="lib" path="C:/Users/PollyG/Downloads/smsj-20051126.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/mysql-connector-java-5.0.5-bin.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/hibernate-commons-annotations-4.0.2.Final.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/hibernate-jpa-2.0-api-1.0.1.Final.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/hibernate-core-4.2.3.Final.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/smsj-20051126.jar"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>
