@@ -1,2 +1,3 @@
 # Module mossbus
 # RPC service class, partial path of RPC policy file
+com.mossbuss.webapp.client.GreetingService, 137DF2BC33977C2A75FA632353DFDEA2.gwt.rpc
